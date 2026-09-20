@@ -10,12 +10,12 @@ Documentation for **ParkourPro** and **ParkourPro Lite** (Minecraft 1.8 – 26.x
 1. Create a repository on GitHub, for example `ParkourPro-Wiki`, and push this folder:
 
    ```bash
-   git remote add origin https://github.com/stanotermans/Parkourpro-lite-wiki.git
+   git remote add origin https://github.com/<your-user>/ParkourPro-Wiki.git
    git push -u origin main
    ```
 
 2. On GitHub open **Settings → Pages**. Under *Build and deployment* choose **Deploy from a branch**, branch `main`, folder `/docs`, and save.
-3. After a minute the site is live at `https://stanotermans.github.io/Parkourpro-lite-wiki/`.
+3. After a minute the site is live at `https://<your-user>.github.io/ParkourPro-Wiki/`.
 
 ## Publish the wiki pages (GitHub Wiki tab)
 
@@ -23,9 +23,9 @@ Documentation for **ParkourPro** and **ParkourPro Lite** (Minecraft 1.8 – 26.x
 2. Clone the wiki repository and copy the pages:
 
    ```bash
-   git clone https://github.com/stanotermans/Parkourpro-lite-wiki.wiki.git
-   cp wiki/*.md Parkourpro-lite-wiki.wiki/
-   cd Parkourpro-lite-wiki.wiki
+   git clone https://github.com/<your-user>/ParkourPro-Wiki.wiki.git
+   cp wiki/*.md ParkourPro-Wiki.wiki/
+   cd ParkourPro-Wiki.wiki
    git add . && git commit -m "ParkourPro wiki 1.0.9" && git push
    ```
 
