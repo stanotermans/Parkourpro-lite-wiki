@@ -34,7 +34,7 @@
 - New messages in the English defaults and the en_US / nl_NL files; other languages receive English automatically.
 - Everything is compiled to Java 8 bytecode and uses only API available from Minecraft 1.8 onwards, with version fallbacks for titles, particles and skulls.
 
-## 1.0.8-1
+## 1.0.8
 
 ### New commands (Pro and Lite)
 
@@ -53,7 +53,7 @@
 ### Other
 
 - New messages added to the built-in defaults and to the en_US and nl_NL language files. Other languages receive the English text automatically.
-- Version bumped to 1.0.8-1.
+- Version bumped to 1.0.8.
 - Compatible with Minecraft 1.8 through 26.x, like the rest of the plugin.
 
 ## 1.0.7-1
