@@ -4,7 +4,7 @@ Documentation for **ParkourPro** (premium) and **ParkourPro Lite** (free), parko
 
 **Read the wiki:** https://stanotermans.github.io/Parkourpro-lite-wiki/
 
-Installation, your first parkour, every command with examples, configuration, holograms, placeholders, Pro features, FAQ and changelog. The same pages are available as Markdown in the [Wiki tab](../../wiki) and in the `wiki/` folder.
+Installation, your first parkour, every command with examples, configuration, holograms, placeholders, Pro features, FAQ and changelog.
 
 ## Downloads
 
