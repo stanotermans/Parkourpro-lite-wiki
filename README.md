@@ -1,36 +1,16 @@
 # ParkourPro Wiki
 
-Documentation for **ParkourPro** and **ParkourPro Lite** (Minecraft 1.8 – 26.x).
+Documentation for **ParkourPro** (premium) and **ParkourPro Lite** (free), parkour plugins for Spigot and Paper on Minecraft **1.8 through 26.x**.
 
-- `docs/` – the website for **GitHub Pages** (`docs/index.html`, single page with search, edition switch and command reference).
-- `wiki/` – Markdown pages for the **GitHub Wiki** tab (`Home.md`, `Commands.md`, ... plus `_Sidebar.md`).
+**Read the wiki:** https://stanotermans.github.io/Parkourpro-lite-wiki/
 
-## Publish the website (GitHub Pages)
+Installation, your first parkour, every command with examples, configuration, holograms, placeholders, Pro features, FAQ and changelog. The same pages are available as Markdown in the [Wiki tab](../../wiki) and in the `wiki/` folder.
 
-1. Create a repository on GitHub, for example `ParkourPro-Wiki`, and push this folder:
+## Downloads
 
-   ```bash
-   git remote add origin https://github.com/<your-user>/ParkourPro-Wiki.git
-   git push -u origin main
-   ```
+- ParkourPro Lite (free): [SpigotMC](https://www.spigotmc.org/resources/%E2%AD%90-parkourpro-lite-1-8-1-21-fully-customizable-free-%E2%AD%90.130978/) · [Modrinth](https://modrinth.com/plugin/parkourpro-lite) · [CurseForge](https://www.curseforge.com/minecraft/bukkit-plugins/parkourpro-lite-1-8-26-3-create-awesome-parkours)
+- ParkourPro (premium): [BuiltByBit](https://builtbybit.com/resources/parkourpro-discord-bot-multi-version.86917/) · [Polymart](https://polymart.org/product/9099/parkourpro-multi-version)
 
-2. On GitHub open **Settings → Pages**. Under *Build and deployment* choose **Deploy from a branch**, branch `main`, folder `/docs`, and save.
-3. After a minute the site is live at `https://<your-user>.github.io/ParkourPro-Wiki/`.
+## Support
 
-## Publish the wiki pages (GitHub Wiki tab)
-
-1. In the repository open the **Wiki** tab and click **Create the first page** (any content, this initialises the wiki).
-2. Clone the wiki repository and copy the pages:
-
-   ```bash
-   git clone https://github.com/<your-user>/ParkourPro-Wiki.wiki.git
-   cp wiki/*.md ParkourPro-Wiki.wiki/
-   cd ParkourPro-Wiki.wiki
-   git add . && git commit -m "ParkourPro wiki 1.0.9" && git push
-   ```
-
-The sidebar (`_Sidebar.md`) and footer are picked up automatically.
-
-## Updating
-
-Edit the Markdown in `wiki/` (and copy it to `docs/wiki/`) or `docs/index.html`, commit and push. Pages redeploys automatically.
+Need a language that is not bundled, found a bug or want help? Join the Discord: https://discord.gg/2UTkYj26B4
