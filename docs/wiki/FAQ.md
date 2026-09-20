@@ -32,3 +32,6 @@ Titles use NMS packets on 1.8. If a fork blocks them the text is sent to chat in
 
 **Which Java do I need?**
 Java 8 or newer.
+
+**I need a language that is not bundled, or something else.**
+Join the Discord server: https://discord.gg/2UTkYj26B4. You can also translate `languages/en_US.yml` yourself and send it in; it will be bundled in the next release.

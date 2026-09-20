@@ -13,3 +13,4 @@
 - [Permissions](Permissions)
 - [FAQ](FAQ)
 - [Changelog](Changelog)
+- [Support (Discord)](https://discord.gg/2UTkYj26B4)

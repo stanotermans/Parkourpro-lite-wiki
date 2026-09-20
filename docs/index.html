@@ -247,6 +247,7 @@ footer a{color:var(--ink-2)}
       <a href="#faq">FAQ &amp; troubleshooting</a>
       <a href="#changelog">Changelog</a>
       <a href="#downloads">Downloads</a>
+      <a href="#support">Support</a>
     </div>
   </nav>
 
@@ -263,6 +264,7 @@ footer a{color:var(--ink-2)}
             <a class="btn primary" href="#quickstart">Create your first parkour →</a>
             <a class="btn ghost" href="#commands">Command reference</a>
             <a class="btn ghost" href="#downloads">Downloads</a>
+            <a class="btn ghost" href="#support">Support &amp; Discord</a>
           </div>
         </div>
       </div>
@@ -724,6 +726,7 @@ GET /api/season</pre>
     <!-- ============ FAQ ============ -->
     <section class="doc" id="faq">
       <h2><span class="num">15</span>FAQ &amp; troubleshooting</h2>
+      <p>Not answered here? Ask on <a href="https://discord.gg/2UTkYj26B4" target="_blank" rel="noopener">the Discord server</a>.</p>
       <details open><summary>The start plate does nothing</summary><p>The parkour needs both a start and an end (<code>setstart</code> and <code>setend</code>). Check that the plate is a gold plate and, in Pro, that it lies inside the WorldGuard region when that restriction is enabled. Locked parkours also require the permission or prior completion.</p></details>
       <details><summary>Players get "you must complete all checkpoints"</summary><p>All checkpoints are required and must be activated in order. A player who skipped one sees "you skipped a checkpoint" on later plates and has to go back. <span class="pro-only">Use <code>setrequiredcheckpoints &lt;parkour&gt; &lt;number&gt;</code> to require fewer. </span>Make sure checkpoints were added in course order.</p></details>
       <details><summary>Command blocks teleport players and they get reset</summary><p>Set <code>anti-cheat.detect-teleport: false</code>. The threshold only applies while that option is on.</p></details>
@@ -767,6 +770,18 @@ GET /api/season</pre>
         <div class="card"><h4>ParkourPro <span class="badge pro">Premium</span></h4><p><a href="https://builtbybit.com/resources/parkourpro-discord-bot-multi-version.86917/" target="_blank" rel="noopener">BuiltByBit</a> · <a href="https://polymart.org/product/9099/parkourpro-multi-version" target="_blank" rel="noopener">Polymart / Voxelshop</a></p></div>
       </div>
       <p>Enjoying the plugin? A review on the platform you downloaded it from helps others find it and keeps development going.</p>
+    </section>
+
+    <!-- ============ SUPPORT ============ -->
+    <section class="doc" id="support">
+      <h2><span class="num">18</span>Support &amp; Discord</h2>
+      <p class="lead">Need a language that is not bundled, found a bug, or want help setting something up? Join the Discord server.</p>
+      <div class="callout"><b>Discord:</b> <a href="https://discord.gg/2UTkYj26B4" target="_blank" rel="noopener">https://discord.gg/2UTkYj26B4</a></div>
+      <ul>
+        <li><b>New language:</b> ask in the server, or translate <code>languages/en_US.yml</code> yourself and send it in. It will be bundled in the next release for everyone.</li>
+        <li><b>Bugs:</b> post your server version, plugin edition and version, and the console log around the error.</li>
+        <li><b>Feature requests and setup help:</b> welcome as well. Pro buyers get priority support.</li>
+      </ul>
       <footer>ParkourPro &amp; ParkourPro Lite by Sotermans · Wiki for version 1.0.9 · Minecraft 1.8 – 26.x</footer>
     </section>
   </main>
