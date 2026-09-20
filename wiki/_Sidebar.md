@@ -1,0 +1,15 @@
+**ParkourPro Wiki**
+
+- [Home](Home)
+- [Installation](Installation)
+- [Getting Started](Getting-Started)
+- [Commands](Commands)
+- [Configuration](Configuration)
+- [Holograms](Holograms)
+- [Records and Statistics](Records-and-Statistics)
+- [Placeholders](Placeholders)
+- [Pro Features](Pro-Features)
+- [Discord](Discord)
+- [Permissions](Permissions)
+- [FAQ](FAQ)
+- [Changelog](Changelog)

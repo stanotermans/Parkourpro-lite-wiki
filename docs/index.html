@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Documentation for ParkourPro and ParkourPro Lite: installation, commands, configuration, holograms, placeholders and FAQ.">
+<title>ParkourPro Wiki</title>
+<style>body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
+</head>
+<body>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  --bg:#f3f1ec; --panel:#ffffff; --panel-2:#eae7df; --ink:#16181d; --ink-2:#4b4f58; --ink-3:#7a7f8a;
+  --line:#dcd8cf; --accent:#e0a100; --accent-ink:#5b4200; --accent-soft:#fff2c4;
+  --pro:#d4460f; --pro-soft:#ffe1d3; --lite:#0f8a5f; --lite-soft:#d3f3e5;
+  --code-bg:#1d1f26; --code-ink:#f3efe3; --code-key:#ffd166; --code-arg:#8ad5ff; --code-opt:#c9c2b3;
+  --shadow:0 10px 30px rgba(20,18,10,.08);
+  --sidebar:260px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#101217; --panel:#181b22; --panel-2:#22262f; --ink:#f1efe8; --ink-2:#c1bfb6; --ink-3:#868b96;
+    --line:#2b303a; --accent:#f2b915; --accent-ink:#ffe8a3; --accent-soft:#3a2f0a;
+    --pro:#ff7a45; --pro-soft:#3d2013; --lite:#3ccf95; --lite-soft:#0f3327;
+    --code-bg:#0b0d12; --code-ink:#eee9db; --code-key:#ffd166; --code-arg:#8ad5ff; --code-opt:#9a948a;
+    --shadow:0 10px 30px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#101217; --panel:#181b22; --panel-2:#22262f; --ink:#f1efe8; --ink-2:#c1bfb6; --ink-3:#868b96;
+  --line:#2b303a; --accent:#f2b915; --accent-ink:#ffe8a3; --accent-soft:#3a2f0a;
+  --pro:#ff7a45; --pro-soft:#3d2013; --lite:#3ccf95; --lite-soft:#0f3327;
+  --code-bg:#0b0d12; --code-ink:#eee9db; --code-key:#ffd166; --code-arg:#8ad5ff; --code-opt:#9a948a;
+  --shadow:0 10px 30px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){ html{scroll-behavior:auto} *{animation:none!important;transition:none!important} }
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;font-size:15.5px;line-height:1.6}
+a{color:inherit}
+h1,h2,h3,h4{font-family:"Chakra Petch","IBM Plex Sans",sans-serif;line-height:1.15;margin:0;text-wrap:balance}
+code,pre,kbd{font-family:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:4px}
+
+/* ---------- top bar ---------- */
+.topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--panel);border-bottom:1px solid var(--line);display:flex;align-items:center;gap:14px;padding:10px 16px;min-height:56px}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:18px;letter-spacing:.02em}
+.brand .mark{width:30px;height:30px;border-radius:7px;background:linear-gradient(135deg,var(--accent),#ff8c3a);display:grid;place-items:center;color:#1d1400;font-size:15px;flex:none}
+.brand small{font-weight:500;color:var(--ink-3);font-size:12px;letter-spacing:.14em;text-transform:uppercase}
+.search{margin-left:auto;position:relative;flex:1;max-width:420px;min-width:140px}
+.search input{width:100%;padding:9px 12px 9px 36px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-size:14px}
+.search svg{position:absolute;left:11px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--ink-3)}
+.search .results{position:absolute;top:calc(100% + 6px);left:0;right:0;background:var(--panel);border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);max-height:320px;overflow:auto;padding:6px;display:none}
+.search .results.open{display:block}
+.search .results a{display:block;padding:8px 10px;border-radius:6px;text-decoration:none;font-size:14px}
+.search .results a:hover,.search .results a:focus{background:var(--panel-2)}
+.search .results a span{display:block;color:var(--ink-3);font-size:12px}
+.search .results .none{padding:10px;color:var(--ink-3);font-size:13px}
+.menu-btn{display:none;border:1px solid var(--line);background:var(--panel);border-radius:8px;padding:7px 10px;font:inherit;color:var(--ink);cursor:pointer}
+
+/* ---------- layout ---------- */
+.shell{display:grid;grid-template-columns:var(--sidebar) minmax(0,1fr);max-width:1240px;margin:0 auto}
+.sidebar{position:sticky;top:calc(56px + env(safe-area-inset-top,0px));height:calc(100vh - 56px - env(safe-area-inset-top,0px));overflow:auto;padding:22px 16px 40px 18px;border-right:1px solid var(--line)}
+.sidebar .group{margin-bottom:18px}
+.sidebar .group > span{display:block;font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-3);font-weight:600;margin:0 0 6px 10px}
+.sidebar a{display:flex;align-items:center;gap:8px;padding:6px 10px;border-radius:7px;text-decoration:none;font-size:14px;color:var(--ink-2)}
+.sidebar a:hover{background:var(--panel-2);color:var(--ink)}
+.sidebar a.active{background:var(--accent-soft);color:var(--accent-ink);font-weight:600}
+main{padding:28px 32px 80px;min-width:0}
+.sidebar-backdrop{display:none}
+
+/* ---------- edition switch ---------- */
+.edition{display:inline-flex;border:1px solid var(--line);border-radius:999px;padding:3px;background:var(--panel);gap:2px}
+.edition button{border:0;background:transparent;font:inherit;font-weight:600;font-size:13px;padding:6px 14px;border-radius:999px;color:var(--ink-2);cursor:pointer}
+.edition button[aria-pressed="true"]{background:var(--ink);color:var(--bg)}
+.edition button.pro[aria-pressed="true"]{background:var(--pro);color:#fff}
+.edition button.lite[aria-pressed="true"]{background:var(--lite);color:#fff}
+body[data-edition="pro"] .lite-only{display:none!important}
+body[data-edition="lite"] .pro-only{display:none!important}
+.hint{font-size:13px;color:var(--ink-3)}
+
+/* ---------- badges ---------- */
+.badge{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:999px;vertical-align:middle;line-height:1.6}
+.badge.pro{background:var(--pro-soft);color:var(--pro)}
+.badge.lite{background:var(--lite-soft);color:var(--lite)}
+.badge.both{background:var(--panel-2);color:var(--ink-2)}
+.badge.new{background:var(--accent-soft);color:var(--accent-ink)}
+.badge.op{background:var(--panel-2);color:var(--ink-2)}
+
+/* ---------- hero ---------- */
+.hero{position:relative;overflow:hidden;border-radius:18px;background:var(--code-bg);color:var(--code-ink);padding:38px 34px 30px;margin-bottom:34px;box-shadow:var(--shadow)}
+.hero canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.9}
+.hero .inner{position:relative;max-width:640px}
+.hero .eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:var(--code-key);font-weight:600}
+.hero h1{font-size:clamp(34px,5vw,54px);margin:8px 0 12px;color:#fff}
+.hero h1 em{font-style:normal;color:var(--code-key)}
+.hero p{font-size:17px;color:#d9d4c6;margin:0 0 20px;max-width:56ch}
+.hero .cta{display:flex;flex-wrap:wrap;gap:10px}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 16px;border-radius:9px;text-decoration:none;font-weight:600;font-size:14px;border:1px solid transparent}
+.btn.primary{background:var(--code-key);color:#1d1400}
+.btn.ghost{border-color:rgba(255,255,255,.25);color:#fff}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:34px}
+.stat{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.stat b{display:block;font-family:"Chakra Petch",sans-serif;font-size:26px;line-height:1;font-variant-numeric:tabular-nums}
+.stat span{font-size:12.5px;color:var(--ink-3);text-transform:uppercase;letter-spacing:.08em}
+
+/* ---------- sections ---------- */
+section.doc{margin-bottom:56px;scroll-margin-top:84px}
+section.doc > h2{font-size:30px;margin-bottom:6px;padding-bottom:10px;border-bottom:2px solid var(--line);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+section.doc > h2 .num{font-size:13px;color:var(--ink-3);font-weight:600;letter-spacing:.1em}
+section.doc .lead{color:var(--ink-2);max-width:68ch;margin:10px 0 20px;font-size:16px}
+h3{font-size:19px;margin:28px 0 10px;scroll-margin-top:84px}
+h4{font-size:15px;margin:18px 0 6px}
+p{max-width:72ch}
+ul,ol{padding-left:22px;max-width:72ch}
+li{margin:4px 0}
+.card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:14px;margin:16px 0}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+.card h4{margin:0 0 6px;font-size:15.5px}
+.card p{margin:0;font-size:14px;color:var(--ink-2)}
+.card .ico{font-size:22px;margin-bottom:8px}
+.callout{border-left:4px solid var(--accent);background:var(--accent-soft);color:var(--ink);padding:12px 16px;border-radius:0 10px 10px 0;margin:16px 0;max-width:72ch}
+.callout.pro{border-color:var(--pro);background:var(--pro-soft)}
+.callout.lite{border-color:var(--lite);background:var(--lite-soft)}
+.callout b{font-family:"Chakra Petch",sans-serif}
+.steps{counter-reset:step;list-style:none;padding:0;max-width:none}
+.steps li{counter-increment:step;display:grid;grid-template-columns:38px 1fr;gap:14px;padding:14px 0;border-bottom:1px dashed var(--line)}
+.steps li::before{content:counter(step);font-family:"Chakra Petch",sans-serif;font-weight:700;font-size:18px;width:38px;height:38px;border-radius:10px;background:var(--ink);color:var(--bg);display:grid;place-items:center}
+.steps li b{display:block;margin-bottom:4px}
+.steps li p{margin:0;color:var(--ink-2);font-size:14.5px}
+
+/* ---------- code ---------- */
+pre{background:var(--code-bg);color:var(--code-ink);padding:14px 16px;border-radius:10px;overflow-x:auto;font-size:13.5px;line-height:1.6;margin:10px 0 16px;max-width:100%}
+pre .c{color:#8b93a4}
+pre .k{color:var(--code-key)}
+pre .v{color:var(--code-arg)}
+:not(pre) > code{background:var(--panel-2);padding:1px 6px;border-radius:5px;font-size:.9em;color:var(--ink)}
+.cmd{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin:10px 0}
+.cmd .sig{font-family:"IBM Plex Mono",monospace;font-size:14px;font-weight:500;overflow-x:auto;white-space:nowrap}
+.cmd .sig .arg{color:var(--pro)}
+.cmd .sig .opt{color:var(--ink-3)}
+.cmd .desc{margin:6px 0 0;font-size:14px;color:var(--ink-2);max-width:none}
+.cmd .meta{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.cmd-filter{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0 6px}
+.cmd-filter button{border:1px solid var(--line);background:var(--panel);border-radius:999px;padding:5px 12px;font:inherit;font-size:13px;cursor:pointer;color:var(--ink-2)}
+.cmd-filter button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* ---------- tables ---------- */
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:12px;margin:12px 0 20px;background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:14px;min-width:520px}
+th,td{padding:9px 12px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-3);background:var(--panel-2)}
+tr:last-child td{border-bottom:0}
+td code{white-space:nowrap}
+
+/* ---------- compare ---------- */
+.compare td:nth-child(2),.compare td:nth-child(3){text-align:center;font-weight:600}
+.yes{color:var(--lite)} .no{color:var(--ink-3)}
+
+/* ---------- feature strips ---------- */
+.feature{display:grid;grid-template-columns:1fr;gap:6px;padding:18px 0;border-bottom:1px solid var(--line)}
+.feature h3{margin:0;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.feature p{margin:0;color:var(--ink-2)}
+
+/* ---------- interactive time parser ---------- */
+.tool{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:16px 18px;margin:12px 0 20px;max-width:560px}
+.tool label{display:block;font-size:13px;color:var(--ink-3);margin-bottom:6px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.tool input{width:100%;padding:9px 12px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);font:inherit;font-family:"IBM Plex Mono",monospace}
+.tool .out{margin-top:10px;font-family:"IBM Plex Mono",monospace;font-size:14px;color:var(--ink-2)}
+.tool .out b{color:var(--ink);font-variant-numeric:tabular-nums}
+.tool .out.bad b{color:var(--pro)}
+
+/* ---------- FAQ ---------- */
+details{border:1px solid var(--line);border-radius:10px;background:var(--panel);padding:0 16px;margin:8px 0;max-width:72ch}
+summary{cursor:pointer;padding:12px 0;font-weight:600;font-family:"Chakra Petch",sans-serif;font-size:15.5px}
+details p{margin:0 0 12px;color:var(--ink-2)}
+
+footer{border-top:1px solid var(--line);padding:24px 0 0;color:var(--ink-3);font-size:13px;margin-top:40px}
+footer a{color:var(--ink-2)}
+
+/* ---------- responsive ---------- */
+@media (max-width:900px){
+  .shell{grid-template-columns:1fr}
+  .menu-btn{display:inline-block}
+  .sidebar{position:fixed;left:0;top:0;bottom:0;width:min(84vw,300px);height:100vh;background:var(--panel);z-index:40;transform:translateX(-100%);transition:transform .2s ease;padding-top:calc(20px + env(safe-area-inset-top,0px));box-shadow:var(--shadow)}
+  body.nav-open .sidebar{transform:none}
+  body.nav-open .sidebar-backdrop{display:block;position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:35}
+  main{padding:20px 16px 60px}
+  .hero{padding:28px 20px 24px}
+  .search{max-width:none}
+  .brand small{display:none}
+}
+@media (max-width:520px){
+  .brand span.name{display:none}
+}
+</style>
+
+<header class="topbar">
+  <button class="menu-btn" id="menuBtn" aria-label="Open navigation">☰ Menu</button>
+  <a class="brand" href="#home"><span class="mark">⚡</span><span class="name">ParkourPro</span><small>Wiki</small></a>
+  <div class="search">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+    <input id="searchBox" type="search" placeholder="Search commands, config keys, placeholders…" autocomplete="off" aria-label="Search the wiki">
+    <div class="results" id="searchResults" role="listbox"></div>
+  </div>
+  <div class="edition" role="group" aria-label="Edition">
+    <button id="edBoth" aria-pressed="true">Both</button>
+    <button id="edPro" class="pro" aria-pressed="false">Pro</button>
+    <button id="edLite" class="lite" aria-pressed="false">Lite</button>
+  </div>
+</header>
+
+<div class="sidebar-backdrop" id="backdrop"></div>
+<div class="shell">
+  <nav class="sidebar" id="sidebar" aria-label="Wiki navigation">
+    <div class="group"><span>Start here</span>
+      <a href="#home">Overview</a>
+      <a href="#editions">Pro vs Lite</a>
+      <a href="#install">Installation</a>
+      <a href="#quickstart">Your first parkour</a>
+      <a href="#wizard">Creation wizard</a>
+    </div>
+    <div class="group"><span>Reference</span>
+      <a href="#commands">Commands</a>
+      <a href="#records">Records &amp; leaderboards</a>
+      <a href="#holograms">Holograms</a>
+      <a href="#config">Configuration</a>
+      <a href="#placeholders">Placeholders</a>
+      <a href="#permissions">Permissions</a>
+    </div>
+    <div class="group"><span>Features</span>
+      <a href="#gameplay">Gameplay &amp; anti-cheat</a>
+      <a href="#pro-features">Pro features</a>
+      <a href="#discord">Discord bot</a>
+      <a href="#webapi">Web API</a>
+      <a href="#storage">MySQL &amp; languages</a>
+    </div>
+    <div class="group"><span>Help</span>
+      <a href="#faq">FAQ &amp; troubleshooting</a>
+      <a href="#changelog">Changelog</a>
+      <a href="#downloads">Downloads</a>
+    </div>
+  </nav>
+
+  <main>
+    <!-- ============ HOME ============ -->
+    <section class="doc" id="home">
+      <div class="hero">
+        <canvas id="heroCanvas" aria-hidden="true"></canvas>
+        <div class="inner">
+          <div class="eyebrow">Spigot · Paper · Minecraft 1.8 → 26.x</div>
+          <h1>Build parkour courses players <em>keep coming back to</em>.</h1>
+          <p>ParkourPro is a checkpoint-based parkour engine with live timers, checkpoint splits, leaderboard holograms, ghost replays, races, seasons, anti-cheat, MySQL sync, 23 languages and a Discord bot. This wiki covers both the free <b>Lite</b> edition and the premium <b>Pro</b> edition.</p>
+          <div class="cta">
+            <a class="btn primary" href="#quickstart">Create your first parkour →</a>
+            <a class="btn ghost" href="#commands">Command reference</a>
+            <a class="btn ghost" href="#downloads">Downloads</a>
+          </div>
+        </div>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>1.8 – 26.x</b><span>Minecraft versions</span></div>
+        <div class="stat"><b>23</b><span>Bundled languages</span></div>
+        <div class="stat"><b>90+</b><span>Subcommands (Pro)</span></div>
+        <div class="stat"><b>v1.0.9</b><span>Current release</span></div>
+      </div>
+      <div class="card-grid">
+        <div class="card"><div class="ico">🏁</div><h4>Pressure-plate courses</h4><p>Gold plates start and finish a run, iron plates are checkpoints. No schematics, no region tools: walk the course and place plates.</p></div>
+        <div class="card"><div class="ico">⏱</div><h4>Live timer</h4><p>Elapsed time and checkpoint progress in the action bar, title, boss bar or XP bar, with optional time limits and penalties.</p></div>
+        <div class="card"><div class="ico">🏆</div><h4>Leaderboard holograms</h4><p>Per-parkour top lists that refresh on a schedule and instantly after a new record, a deleted time or a set time.</p></div>
+        <div class="card"><div class="ico">🛡</div><h4>Anti-cheat &amp; fallback</h4><p>Fly and teleport detection, fall-back to checkpoint by Y level or block drop, death handling and command blocking.</p></div>
+        <div class="card"><div class="ico">🗄</div><h4>MySQL or YAML</h4><p>Records live in MySQL for networks or in a local file. Switching between Pro and Lite migrates records automatically.</p></div>
+        <div class="card"><div class="ico">💬</div><h4>Discord &amp; PlaceholderAPI</h4><p>Slash-command leaderboards in Discord (Pro) and <code>%parkour_…%</code> placeholders for scoreboards and tab lists.</p></div>
+      </div>
+    </section>
+
+    <!-- ============ EDITIONS ============ -->
+    <section class="doc" id="editions">
+      <h2><span class="num">01</span>Pro vs Lite</h2>
+      <p class="lead">Lite is free and covers everything a single server needs to run great parkour courses. Pro adds the tools larger servers and networks ask for. Use the switch in the top bar to filter this whole wiki to one edition.</p>
+      <div class="tbl"><table class="compare">
+        <thead><tr><th>Feature</th><th>Lite (free)</th><th>Pro (premium)</th></tr></thead>
+        <tbody>
+          <tr><td>Start, end, reset and checkpoint plates</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Creation wizard with guided steps</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Live timer (action bar, title, boss bar)</td><td class="yes">✓</td><td class="yes">✓ + XP bar</td></tr>
+          <tr><td>Holograms for start, end, checkpoints and leaderboard</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Records in MySQL or local YAML</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td><code>deletetime</code> / <code>settime</code> record management</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Anti-cheat (fly, teleport), Y-level fallback, death handling</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>End commands, first-completion rewards</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Required permission / required completed parkour</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>PlaceholderAPI expansion, LuckPerms prefixes, 23 languages</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Checkpoint splits, statistics, <code>top</code> / <code>pb</code> commands, cooldowns, leave radius, per-parkour sounds and titles, export / import, Discord webhook</td><td class="yes">✓</td><td class="yes">✓</td></tr>
+          <tr><td>Ghost replay of the fastest run</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Race mode with countdown and winner tracking</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Daily / weekly / monthly leaderboards and seasons with rewards</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Parkour menu, rewards by time and rank, checkpoint effects, speed check, network sync, web API</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Finish without triggering the end plate (proximity finish)</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Time limits with penalty and offline-penalty commands</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Fall-blocks fallback (drop N blocks from highest point)</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Special pressure plates: jump / levitation / build plates</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Medals (gold / silver / bronze) with reward commands</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Hide other players, dynamic hologram visibility, testing mode</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Required checkpoints, delete / move checkpoints</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Hologram display styling (background, opacity, scale, billboard)</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Player heads on modern leaderboards (1.21.10+)</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>WorldGuard region restriction, ItemsAdder icons</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Discord bot with <code>/scoreboard</code> slash command</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td><code>/parkour join</code>, <code>stats</code>, <code>leaderboard</code>, <code>list</code>, <code>/leave</code></td><td class="no">—</td><td class="yes">✓</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <!-- ============ INSTALL ============ -->
+    <section class="doc" id="install">
+      <h2><span class="num">02</span>Installation</h2>
+      <p class="lead">One jar, no hard dependencies. Everything else is optional and detected automatically.</p>
+      <ol class="steps">
+        <li><b>Drop the jar in <code>plugins/</code></b><p>Use <code>ParkourPro-1.0.9.jar</code> or <code>ParkourProLite-1.0.9.jar</code>. Never run both editions at the same time.</p></li>
+        <li><b>Restart the server</b><p>The plugin writes <code>config.yml</code>, <code>parkours.yml</code>, <code>records.yml</code> and a <code>languages/</code> folder with all 23 translations.</p></li>
+        <li><b>Pick a language and storage</b><p>Set <code>language</code> in config.yml (for example <code>nl_NL</code>). Enable <code>mysql</code> if you run a network, otherwise records stay in <code>records.yml</code>.</p></li>
+        <li><b>Optional add-ons</b><p>LuckPerms (rank prefixes on holograms), PlaceholderAPI (placeholders), <span class="pro-only">WorldGuard (region restriction), ItemsAdder (custom icons in the timer), </span>and for Pro a Discord bot token.</p></li>
+        <li><b>Apply changes with <code>/parkour reload</code></b><p>Reloads config, parkours, holograms and languages without a restart. New message keys are added to existing language files automatically.</p></li>
+      </ol>
+      <div class="callout"><b>Upgrading?</b> Replace the old jar with the new one and restart. All existing configurations and records stay compatible. Switching between Pro and Lite copies <code>records.yml</code> from the other edition's folder on first start.</div>
+      <h3>Requirements</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>Component</th><th>Supported</th></tr></thead>
+        <tbody>
+          <tr><td>Server software</td><td>Spigot, Paper and forks (Purpur, Pufferfish…)</td></tr>
+          <tr><td>Minecraft</td><td>1.8 through 26.x. Legacy versions use armor-stand holograms, modern versions can use text displays.</td></tr>
+          <tr><td>Java</td><td>Java 8 bytecode. Runs on Java 8, 11, 17, 21 and 25.</td></tr>
+          <tr><td>Soft dependencies</td><td>LuckPerms, PlaceholderAPI, ItemsAdder<span class="pro-only">, ProtocolLib, DecentHolograms, WorldGuard, WorldEdit</span></td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <!-- ============ QUICK START ============ -->
+    <section class="doc" id="quickstart">
+      <h2><span class="num">03</span>Your first parkour</h2>
+      <p class="lead">A course is three kinds of pressure plates. Look at a plate while running each command.</p>
+      <div class="card-grid">
+        <div class="card"><div class="ico">🟨</div><h4>Gold plate = start</h4><p>Light weighted pressure plate. Stepping on it starts the run and the timer.</p></div>
+        <div class="card"><div class="ico">🟨</div><h4>Gold plate = end</h4><p>A second gold plate finishes the run and saves the time.</p></div>
+        <div class="card"><div class="ico">⬜</div><h4>Iron plates = checkpoints</h4><p>Heavy weighted pressure plates, added in order. Players must activate them in sequence and teleport back to the last one they reached.</p></div>
+      </div>
+      <ol class="steps">
+        <li><b>Set the start</b><p>Look at a gold plate and run:</p><pre><span class="k">/parkour setstart</span> <span class="v">sky</span></pre></li>
+        <li><b>Set the end</b><p>Look at the finish gold plate:</p><pre><span class="k">/parkour setend</span> <span class="v">sky</span></pre></li>
+        <li><b>Add checkpoints</b><p>Look at each iron plate in course order. Repeat for every checkpoint. Checkpoints are optional.</p><pre><span class="k">/parkour addcheckpoint</span> <span class="v">sky</span></pre></li>
+        <li><b>Set the reset location</b><p>Stand where players should land after <code>/parkour reset</code> or a fall without checkpoints:</p><pre><span class="k">/parkour setreset</span> <span class="v">sky</span></pre></li>
+        <li><b>Add a leaderboard</b><p>Look at a block where the top list should float:</p><pre><span class="k">/parkour addleaderboard</span> <span class="v">sky</span>
+<span class="k">/parkour setleaderboardsize</span> <span class="v">sky 10</span></pre></li>
+        <li><b>Protect the course from falls</b><p>Teleport players back when they drop below Y 60:</p><pre><span class="k">/parkour setfallback</span> <span class="v">y sky 60</span>
+<span class="k">/parkour togglefallback</span> <span class="v">sky</span></pre></li>
+      </ol>
+      <div class="callout lite"><b>Tip.</b> Prefer a guided flow? The <a href="#wizard">creation wizard</a> walks you through start, end and checkpoints with validation at every step.</div>
+    </section>
+
+    <!-- ============ WIZARD ============ -->
+    <section class="doc" id="wizard">
+      <h2><span class="num">04</span>Creation wizard</h2>
+      <p class="lead">The wizard validates every step, prevents duplicate checkpoints and creates the holograms for you.</p>
+      <pre><span class="k">/parkour wizard</span> <span class="v">&lt;name&gt; start</span>     <span class="c"># begin</span>
+<span class="k">/parkour wizard</span> <span class="v">&lt;name&gt; cancel</span>    <span class="c"># discard and exit</span></pre>
+      <div class="tbl"><table>
+        <thead><tr><th>Step</th><th>What to do</th><th>Item</th></tr></thead>
+        <tbody>
+          <tr><td>1 · Start</td><td>Stand on a gold plate and confirm.</td><td>Oak button (confirm)</td></tr>
+          <tr><td>2 · End</td><td>Stand on a different gold plate and confirm.</td><td>Oak button (confirm)</td></tr>
+          <tr><td>3 · Checkpoints</td><td>Stand on each iron plate in order and add it. Zero checkpoints is allowed.</td><td>Iron ingot (add) · Emerald (done)</td></tr>
+          <tr><td>Any</td><td>Cancel the wizard.</td><td>Redstone</td></tr>
+        </tbody>
+      </table></div>
+      <p>Your inventory is stored and restored when the wizard finishes or is cancelled. Afterwards you can still run <code>/parkour setreset</code>, add holograms or change any option.</p>
+    </section>
+
+    <!-- ============ COMMANDS ============ -->
+    <section class="doc" id="commands">
+      <h2><span class="num">05</span>Commands</h2>
+      <p class="lead">Root command <code>/parkour</code> with aliases <code>/pk</code> and <code>/par</code>. Admin commands need <code>parkour.admin</code>. Angle brackets are required, square brackets are optional.</p>
+      <div class="cmd-filter" role="group" aria-label="Command category">
+        <button data-cat="all" aria-pressed="true">All</button>
+        <button data-cat="setup" aria-pressed="false">Course setup</button>
+        <button data-cat="rules" aria-pressed="false">Rules &amp; behaviour</button>
+        <button data-cat="holo" aria-pressed="false">Holograms</button>
+        <button data-cat="records" aria-pressed="false">Records</button>
+        <button data-cat="player" aria-pressed="false">Player</button>
+        <button data-cat="admin" aria-pressed="false">Admin</button>
+      </div>
+      <div id="cmdList">
+
+      <h3 data-cat="setup">Course setup</h3>
+      <div class="cmd" data-cat="setup"><div class="sig">/parkour setstart <span class="arg">&lt;name&gt;</span></div><p class="desc">Sets the start plate to the gold plate you are looking at. Creates the parkour if it does not exist yet.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="setup"><div class="sig">/parkour setend <span class="arg">&lt;name&gt;</span></div><p class="desc">Sets the finish plate (gold plate you are looking at).</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="setup"><div class="sig">/parkour setreset <span class="arg">&lt;name&gt;</span></div><p class="desc">Sets the reset location to where you are standing. Used by <code>/parkour reset</code>, falls without checkpoints and (by default) leaving.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="setup"><div class="sig">/parkour setleaveposition <span class="arg">&lt;name&gt;</span></div><p class="desc">Where players are teleported when they leave or run out of time. Falls back to the reset location when unset.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="setup"><div class="sig">/parkour addcheckpoint <span class="arg">&lt;name&gt;</span></div><p class="desc">Adds the iron plate you are looking at as the next checkpoint.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd pro-only" data-cat="setup"><div class="sig">/parkour deletecheckpoint <span class="arg">&lt;parkour&gt; &lt;number&gt;</span></div><p class="desc">Removes checkpoint <i>number</i> and renumbers the rest.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd pro-only" data-cat="setup"><div class="sig">/parkour movecheckpoint <span class="arg">&lt;parkour&gt; &lt;number&gt;</span></div><p class="desc">Moves an existing checkpoint to the iron plate you are looking at.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd pro-only" data-cat="setup"><div class="sig">/parkour setrequiredcheckpoints <span class="arg">&lt;parkour&gt; &lt;number|-1&gt;</span></div><p class="desc">How many checkpoints a player must reach before the end plate counts. <code>-1</code> means all of them.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd pro-only" data-cat="setup"><div class="sig">/parkour create <span class="arg">&lt;name&gt;</span></div><p class="desc">Creates an empty parkour you can fill in later.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd" data-cat="setup"><div class="sig">/parkour wizard <span class="arg">&lt;name&gt;</span> <span class="opt">[start|cancel]</span></div><p class="desc">Guided creation flow. See <a href="#wizard">Creation wizard</a>.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="setup"><div class="sig">/parkour export <span class="arg">&lt;parkour&gt;</span></div><p class="desc">Writes the parkour to <code>exports/&lt;name&gt;.yml</code> with all settings, holograms and relative coordinates.</p><div class="meta"><span class="badge both">Pro + Lite</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd" data-cat="setup"><div class="sig">/parkour import <span class="arg">&lt;file&gt;</span> <span class="opt">[newName]</span></div><p class="desc">Look at the gold plate that becomes the new start. Every location is shifted relative to it, so a course can move to another world or server.</p><div class="meta"><span class="badge both">Pro + Lite</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd" data-cat="setup"><div class="sig">/parkour delete <span class="arg">&lt;name&gt;</span></div><p class="desc">Deletes the parkour, its holograms and all of its records. Players inside are kicked out of the run.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+
+      <h3 data-cat="rules">Rules &amp; behaviour</h3>
+      <div class="cmd pro-only" data-cat="rules"><div class="sig">/parkour togglefinishproximity <span class="arg">&lt;parkour&gt;</span> <span class="opt">[radius]</span></div><p class="desc">Finish when the player reaches the end-plate area, without having to trigger the plate (jumping over it, sneaking). Radius 0.5 to 10 blocks, default 1. Passing a radius enables the option.</p><div class="meta"><span class="badge pro">Pro</span><span class="badge new">New in 1.0.8</span></div></div>
+      <div class="cmd pro-only" data-cat="rules"><div class="sig">/parkour togglefinishredirect <span class="arg">&lt;name&gt;</span></div><p class="desc">Teleport players back to the start plate after finishing.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd" data-cat="rules"><div class="sig">/parkour setleaveradius <span class="arg">&lt;parkour&gt; &lt;blocks|0&gt;</span></div><p class="desc">Cancels the run when the player is further than this many blocks from every plate of the course. 0 disables.</p><div class="meta"><span class="badge both">Pro + Lite</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd" data-cat="rules"><div class="sig">/parkour setcooldown <span class="arg">&lt;parkour&gt; &lt;seconds|0&gt;</span></div><p class="desc">Players must wait this long after finishing before starting the same parkour again.</p><div class="meta"><span class="badge both">Pro + Lite</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd" data-cat="rules"><div class="sig">/parkour setmaxattempts <span class="arg">&lt;parkour&gt; &lt;perDay|0&gt;</span></div><p class="desc">Maximum number of starts per player per day.</p><div class="meta"><span class="badge both">Pro + Lite</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd" data-cat="rules"><div class="sig">/parkour setsound <span class="arg">&lt;parkour&gt; &lt;start|checkpoint|finish|reset|teleport-back&gt; &lt;SOUND|none|default&gt;</span></div><p class="desc">Per-parkour sound override. Tab completion lists every sound of your server version.</p><div class="meta"><span class="badge both">Pro + Lite</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd" data-cat="rules"><div class="sig">/parkour settitle <span class="arg">&lt;parkour&gt; &lt;start|finish&gt; &lt;title|subtitle&gt; &lt;text|none&gt;</span></div><p class="desc">Title shown when a run starts or finishes. Placeholders <code>%player%</code>, <code>%parkour%</code>, <code>%time%</code>.</p><div class="meta"><span class="badge both">Pro + Lite</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd pro-only" data-cat="rules"><div class="sig">/parkour setcheckpointeffect <span class="arg">&lt;parkour&gt; &lt;checkpoint#&gt; &lt;title|subtitle|sound|particle|command|clear&gt;</span> <span class="opt">[value]</span></div><p class="desc">Title, sound, particle burst or console command when a checkpoint is reached. <code>command none</code> clears the commands.</p><div class="meta"><span class="badge pro">Pro</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd pro-only" data-cat="rules"><div class="sig">/parkour addtimereward <span class="arg">&lt;parkour&gt; &lt;mm:ss.ms&gt; &lt;command&gt;</span></div><p class="desc">Console command for every finish under the time. <code>removetimereward &lt;parkour&gt; &lt;time|all&gt;</code> removes.</p><div class="meta"><span class="badge pro">Pro</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd pro-only" data-cat="rules"><div class="sig">/parkour addtopreward <span class="arg">&lt;parkour&gt; &lt;position&gt; &lt;command&gt;</span></div><p class="desc">Runs when a new personal best lands on that leaderboard position. <code>addrecordreward &lt;parkour&gt; &lt;command&gt;</code> fires on any new personal best. <code>/parkour rewards &lt;parkour&gt;</code> lists all rewards.</p><div class="meta"><span class="badge pro">Pro</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd" data-cat="rules"><div class="sig">/parkour toggleleaveredirect <span class="arg">&lt;name&gt;</span></div><p class="desc">Teleport players to the start when they leave, instead of the reset or leave position.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="rules"><div class="sig">/parkour togglefallback <span class="arg">&lt;name&gt;</span></div><p class="desc">Enables the fallback rule for this parkour (see <code>setfallback</code>).</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd lite-only" data-cat="rules"><div class="sig">/parkour setfallback <span class="arg">y &lt;name&gt; &lt;Y&gt;</span></div><p class="desc">Teleport the player to their last checkpoint when they drop below this Y level.</p><div class="meta"><span class="badge lite">Lite</span></div></div>
+      <div class="cmd pro-only" data-cat="rules"><div class="sig">/parkour setfallback <span class="arg">&lt;y|blocks&gt; &lt;name&gt; &lt;value&gt;</span></div><p class="desc"><code>y</code>: fall back below a Y level. <code>blocks</code>: fall back after dropping this many blocks from the highest point since the last checkpoint.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd" data-cat="rules"><div class="sig">/parkour toggledeath <span class="arg">&lt;name&gt;</span></div><p class="desc">Treat dying like a fall: the player continues at their checkpoint.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="rules"><div class="sig">/parkour toggledeathrespawn <span class="arg">&lt;name&gt;</span></div><p class="desc">Respawn inside the course after death instead of at the world spawn.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="rules"><div class="sig">/parkour toggleitems <span class="arg">&lt;parkour&gt; &lt;true|false&gt;</span></div><p class="desc">Whether players get the hotbar items (teleport, reset, cancel) for this parkour.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="rules"><div class="sig">/parkour togglelocks <span class="opt">[true|false]</span></div><p class="desc">Global switch for parkour locks (required permission / required completion).</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="rules"><div class="sig">/parkour setrequiredpermission <span class="arg">&lt;parkour&gt; &lt;permission|none&gt;</span></div><p class="desc">Only players with this permission can start the parkour.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="rules"><div class="sig">/parkour setrequiredcompletion <span class="arg">&lt;parkour&gt; &lt;required-parkour|none&gt;</span></div><p class="desc">Players must have finished another parkour first. Great for progression maps.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd pro-only" data-cat="rules"><div class="sig">/parkour settimelimit <span class="arg">&lt;parkour&gt; &lt;seconds&gt;</span></div><p class="desc">Players must finish within this time. <code>0</code> disables. Requires a leave position on the parkour.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd pro-only" data-cat="rules"><div class="sig">/parkour addpenalty <span class="arg">&lt;parkour&gt; &lt;command&gt;</span></div><p class="desc">Console command run when the time limit expires. Use <code>%player%</code>. Remove with <code>removepenalty &lt;parkour&gt; [command]</code>.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd pro-only" data-cat="rules"><div class="sig">/parkour addofflinepenalty <span class="arg">&lt;parkour&gt; &lt;command&gt;</span></div><p class="desc">Console command run when a player disconnects mid-run. <code>setpenaltyoffline [parkour] &lt;command&gt;</code> sets the default, <code>removeofflinepenalty</code> removes one.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd" data-cat="rules"><div class="sig">/parkour addendcommand <span class="arg">&lt;parkour&gt; &lt;command&gt;</span></div><p class="desc">Console command run on every finish. Remove with <code>removeendcommand &lt;parkour&gt;</code>.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd pro-only" data-cat="rules"><div class="sig">/parkour addfirstreward <span class="arg">&lt;parkour&gt; &lt;command&gt;</span></div><p class="desc">Console command run once, on a player's first ever completion. Remove with <code>removefirstreward &lt;parkour&gt; [command]</code>.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd lite-only" data-cat="rules"><div class="sig">/parkour setfirstreward <span class="arg">&lt;parkour&gt; &lt;command&gt;</span></div><p class="desc">Console command run once, on a player's first ever completion. Remove with <code>removefirstreward &lt;parkour&gt;</code>.</p><div class="meta"><span class="badge lite">Lite</span></div></div>
+      <div class="cmd pro-only" data-cat="rules"><div class="sig">/parkour togglehideplayers <span class="arg">&lt;parkour&gt;</span></div><p class="desc">Hide other runners in the same parkour (body, tab list and/or chat, configurable).</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd pro-only" data-cat="rules"><div class="sig">/parkour testmode <span class="arg">&lt;parkour&gt; &lt;enabled|disabled&gt;</span></div><p class="desc">While enabled, first-completion rewards are not paid out. Use it while building and testing.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd pro-only" data-cat="rules"><div class="sig">/parkour togglemedals <span class="arg">&lt;parkour&gt;</span></div><p class="desc">Starts a medal calibration run. Finish the course, then <code>confirmmedals &lt;parkour&gt; &lt;yes|no&gt;</code> to save gold/silver/bronze thresholds.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd pro-only" data-cat="rules"><div class="sig">/parkour addeffectplate <span class="arg">&lt;parkour&gt; &lt;jump|levitation&gt;</span></div><p class="desc">Turns the plate you look at into a special plate that applies the effect. <code>removespecialplate &lt;parkour&gt;</code> removes it.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd pro-only" data-cat="rules"><div class="sig">/parkour addbuildplate <span class="arg">&lt;parkour&gt; &lt;block&gt;</span> <span class="opt">[x,y,z …]</span></div><p class="desc">A plate that temporarily places blocks at the given offsets (default from config), removed after a delay.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+
+      <h3 data-cat="holo">Holograms</h3>
+      <div class="cmd" data-cat="holo"><div class="sig">/parkour sethologram <span class="arg">&lt;name&gt; &lt;start|end|checkpoint|leaderboard&gt; &lt;text&gt;</span></div><p class="desc">Sets hologram text. Separate lines with <code>|</code>. For a checkpoint: <code>sethologram &lt;name&gt; checkpoint &lt;#&gt; &lt;text&gt;</code>. Colour codes and hex colours are supported.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="holo"><div class="sig">/parkour addleaderboard <span class="arg">&lt;name&gt;</span></div><p class="desc">Creates (or moves) the leaderboard hologram at the block you are looking at.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="holo"><div class="sig">/parkour setleaderboardsize <span class="arg">&lt;name&gt; &lt;size&gt;</span></div><p class="desc">Number of entries shown on the leaderboard hologram.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="holo"><div class="sig">/parkour movehologram <span class="arg">&lt;parkour&gt; &lt;start|end|leaderboard|checkpoint[:#]&gt;</span></div><p class="desc">Moves a hologram to the block you are looking at.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="holo"><div class="sig">/parkour removehologram <span class="arg">&lt;parkour&gt; &lt;all|start|end|leaderboard|checkpoint[:#]&gt;</span></div><p class="desc">Hides a hologram. Re-enable it with <code>sethologram</code> or <code>addleaderboard</code>.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd pro-only" data-cat="holo"><div class="sig">/parkour sethologramdisplay <span class="arg">&lt;parkour&gt; &lt;all|start|end|checkpoint[:N]|leaderboard&gt; &lt;property&gt; &lt;value&gt;</span></div><p class="desc">Styling on text-display holograms (Paper 1.19.4+): <code>background</code> (hex or transparent), <code>opacity</code> 0–255, <code>seethrough</code>, <code>billboard</code> (center, fixed, vertical, horizontal), <code>scale</code>.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd pro-only" data-cat="holo"><div class="sig">/parkour addperiodleaderboard <span class="arg">&lt;parkour&gt; &lt;daily|weekly|monthly&gt;</span></div><p class="desc">Daily, weekly or monthly leaderboard hologram at the block you look at. <code>removeperiodleaderboard</code> removes it.</p><div class="meta"><span class="badge pro">Pro</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd pro-only" data-cat="holo"><div class="sig">/parkour toggledynamichologram <span class="arg">&lt;parkour&gt;</span></div><p class="desc">Each player only sees the hologram that matters for their progress (next checkpoint, then the finish).</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+
+      <h3 data-cat="records">Records</h3>
+      <div class="cmd" data-cat="records"><div class="sig">/parkour deletetime <span class="arg">&lt;parkour&gt; &lt;player&gt;</span></div><p class="desc">Wipes a player's record, for example a cheater. Works for offline players and with MySQL. The leaderboard hologram refreshes instantly.</p><div class="meta"><span class="badge both">Pro + Lite</span><span class="badge new">New in 1.0.8</span></div></div>
+      <div class="cmd" data-cat="records"><div class="sig">/parkour settime <span class="arg">&lt;parkour&gt; &lt;player&gt; &lt;mm:ss.ms&gt;</span></div><p class="desc">Sets or overwrites a player's record, even when slower than their current one. The leaderboard hologram refreshes instantly. See <a href="#records">time format</a>.</p><div class="meta"><span class="badge both">Pro + Lite</span><span class="badge new">New in 1.0.8</span></div></div>
+      <div class="cmd" data-cat="records"><div class="sig">/parkour top <span class="arg">&lt;parkour&gt;</span> <span class="opt">[daily|weekly|monthly] [page]</span></div><p class="desc">Leaderboard in chat, ten per page, with your own rank at the bottom. Periods are Pro.</p><div class="meta"><span class="badge both">Pro + Lite</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd" data-cat="records"><div class="sig">/parkour pb <span class="arg">&lt;parkour&gt;</span> <span class="opt">[player]</span></div><p class="desc">Best time, rank, checkpoint splits of the best run, attempts, completions and play time.</p><div class="meta"><span class="badge both">Pro + Lite</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd pro-only" data-cat="records"><div class="sig">/parkour season <span class="arg">&lt;info|list|new [name] confirm&gt;</span></div><p class="desc">Ends the season: pays the configured rewards to the top players of every parkour, archives every record and starts with empty leaderboards.</p><div class="meta"><span class="badge pro">Pro</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd pro-only" data-cat="records"><div class="sig">/parkour stats <span class="arg">&lt;parkour&gt;</span> <span class="opt">[player]</span></div><p class="desc">Shows a player's best time and rank on a parkour.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd pro-only" data-cat="records"><div class="sig">/parkour leaderboard <span class="arg">&lt;parkour&gt;</span></div><p class="desc">Prints the top list in chat.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+
+      <h3 data-cat="player">Player commands</h3>
+      <div class="cmd" data-cat="player"><div class="sig">/parkour checkpoint</div><p class="desc">Teleport to your last checkpoint.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="player"><div class="sig">/parkour undocheckpoint</div><p class="desc">Go back one checkpoint.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="player"><div class="sig">/parkour reset</div><p class="desc">Restart the run from the reset location. The timer restarts.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="player"><div class="sig">/parkour cancel</div><p class="desc">Abort the run and leave the course.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd" data-cat="player"><div class="sig">/parkour leave</div><p class="desc">Leave the parkour. Pro also registers a plain <code>/leave</code>.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      <div class="cmd pro-only" data-cat="player"><div class="sig">/parkour menu</div><p class="desc">Inventory with every parkour, your best time, rank and attempts. Click to teleport to the start.</p><div class="meta"><span class="badge pro">Pro</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd pro-only" data-cat="player"><div class="sig">/parkour ghost <span class="arg">&lt;parkour&gt;</span> <span class="opt">[play|loop|stop|delete]</span></div><p class="desc">Replays the fastest run as a ghost with the record holder's head. Recorded automatically on every new fastest time.</p><div class="meta"><span class="badge pro">Pro</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd pro-only" data-cat="player"><div class="sig">/parkour race <span class="arg">&lt;create &lt;parkour&gt;|join &lt;host&gt;|start|leave|cancel&gt;</span></div><p class="desc">Create a race, let others join, start the countdown. Everyone is frozen on the start plate until GO; the first over the finish wins.</p><div class="meta"><span class="badge pro">Pro</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd pro-only" data-cat="player"><div class="sig">/parkour join <span class="arg">&lt;parkour&gt;</span></div><p class="desc">Teleport to the start of a parkour.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd pro-only" data-cat="player"><div class="sig">/parkour list</div><p class="desc">Lists all parkours.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+      <div class="cmd pro-only" data-cat="player"><div class="sig">/parkour language <span class="arg">&lt;code&gt;</span></div><p class="desc">Switches the server language, for example <code>nl_NL</code>.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
+
+      <h3 data-cat="admin">Admin</h3>
+      <div class="cmd" data-cat="admin"><div class="sig">/parkour reload</div><p class="desc">Reloads config, parkours, holograms, timer display and languages<span class="pro-only">, and re-registers Discord commands</span>.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
+      </div>
+    </section>
+
+    <!-- ============ RECORDS ============ -->
+    <section class="doc" id="records">
+      <h2><span class="num">06</span>Records &amp; leaderboards</h2>
+      <p class="lead">A record is one best time per player per parkour. Only faster runs replace it, unless an admin overrides it with <code>settime</code>.</p>
+      <h3>Where records are stored</h3>
+      <ul>
+        <li><b>Local:</b> <code>plugins/ParkourPro/records.yml</code> (or the Lite folder). Always written, even with MySQL on, so you keep a local copy.</li>
+        <li><b>MySQL:</b> table <code>&lt;prefix&gt;records</code> with one row per player and parkour. Shared across a network, all queries run off the main thread.</li>
+        <li><b>Leaderboards</b> read from MySQL first and fall back to the local file.</li>
+      </ul>
+      <h3>Managing records</h3>
+      <pre><span class="k">/parkour deletetime</span> <span class="v">sky Notch</span>           <span class="c"># wipe Notch's time on "sky"</span>
+<span class="k">/parkour settime</span> <span class="v">sky Notch 01:23.456</span>  <span class="c"># set Notch's time to 1 min 23.456 s</span></pre>
+      <p>Player lookup works for offline players: the plugin checks online players, then stored records on that parkour, then records on any parkour, then the server's player data. After both commands the leaderboard hologram is redrawn immediately and PlaceholderAPI values refresh within five seconds.</p>
+      <h3>Time format for <code>settime</code></h3>
+      <div class="tool">
+        <label for="timeInput">Try a value</label>
+        <input id="timeInput" value="01:23.456" spellcheck="false">
+        <div class="out" id="timeOut"></div>
+      </div>
+      <div class="tbl"><table>
+        <thead><tr><th>Input</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>01:23.456</code></td><td>1 minute, 23 seconds, 456 ms</td></tr>
+          <tr><td><code>1:23.4</code></td><td>1 minute, 23.4 seconds (fraction 1–3 digits)</td></tr>
+          <tr><td><code>83.5</code> or <code>45</code></td><td>Seconds only</td></tr>
+          <tr><td><code>1:01:23.456</code></td><td>Hours, minutes, seconds</td></tr>
+          <tr><td><code>01:23,456</code></td><td>Comma decimal is accepted</td></tr>
+          <tr><td><code>1:60.000</code> · <code>abc</code> · <code>0</code></td><td>Rejected with an "invalid time" message</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <!-- ============ HOLOGRAMS ============ -->
+    <section class="doc" id="holograms">
+      <h2><span class="num">07</span>Holograms</h2>
+      <p class="lead">Every parkour can show a start, end, per-checkpoint and leaderboard hologram. Default text comes from <code>config.yml</code>; per-parkour text from <code>sethologram</code>.</p>
+      <h3>Renderers</h3>
+      <ul>
+        <li><b>Legacy (1.8 – 1.19):</b> invisible armor stands, one per line. Rock solid on every server.</li>
+        <li><b>Modern (1.19.4+ Paper):</b> text displays with background, opacity, scale and billboard settings<span class="pro-only"> via <code>sethologramdisplay</code></span>.</li>
+        <li class="pro-only"><b>HologramLib renderer (Pro, 1.20+):</b> enable <code>holograms.modern-renderer.enabled</code> for packet-based holograms and player heads on leaderboard rows (heads render on 1.21.10+).</li>
+      </ul>
+      <h3>Leaderboard text</h3>
+      <pre>holograms:
+  text:
+    leaderboard:
+      header:
+        - <span class="v">"&amp;e&amp;lLeaderboard"</span>
+        - <span class="v">"&amp;7Update every &amp;e%update-interval%&amp;7 %update-unit%"</span>
+      entry-format: <span class="v">"%pos% &amp;8» %prefix%%player% &amp;8- &amp;e%time%"</span>
+      position-colors: { 1: <span class="v">"&amp;6&amp;l"</span>, 2: <span class="v">"&amp;7&amp;l"</span>, 3: <span class="v">"&amp;c&amp;l"</span>, default: <span class="v">"&amp;e&amp;l"</span> }
+      no-record-player: <span class="v">"Unknown"</span>
+      no-record-time: <span class="v">"--:--"</span></pre>
+      <div class="tbl"><table>
+        <thead><tr><th>Placeholder</th><th>Used in</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><code>%parkour%</code></td><td>header</td><td>Parkour name</td></tr>
+          <tr><td><code>%update-interval%</code> <code>%update-unit%</code></td><td>header</td><td>Refresh cadence, localized (e.g. "1 minute")</td></tr>
+          <tr><td><code>%pos%</code></td><td>entry</td><td>Position with its colour, e.g. <code>&amp;6&amp;l#1</code></td></tr>
+          <tr><td><code>%prefix%</code></td><td>entry</td><td>LuckPerms prefix when <code>show-prefix</code> is on</td></tr>
+          <tr><td><code>%player%</code> <code>%time%</code></td><td>entry</td><td>Name and formatted time</td></tr>
+          <tr><td><code>%best_time%</code></td><td>start hologram</td><td>Fastest recorded time on this parkour</td></tr>
+          <tr><td><code>%checkpoint%</code></td><td>checkpoint hologram</td><td>Checkpoint number</td></tr>
+          <tr class="pro-only"><td><code>&lt;head:%player%&gt;</code></td><td>entry (Pro, modern)</td><td>Player head before the row on 1.21.10+, stripped on older versions</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Offsets and visibility</h3>
+      <p><code>start-offset</code>, <code>end-offset</code>, <code>checkpoint-offset</code> and <code>leaderboard-offset</code> raise the hologram above its plate. <code>line-spacing</code> sets the gap between lines. <code>visibility-range</code> hides holograms beyond that many blocks (0 = always visible). The leaderboard refreshes every <code>update-interval</code> seconds and immediately after a record change.</p>
+    </section>
+
+    <!-- ============ CONFIG ============ -->
+    <section class="doc" id="config">
+      <h2><span class="num">08</span>Configuration</h2>
+      <p class="lead">Everything lives in <code>config.yml</code>. Change it, then run <code>/parkour reload</code>.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Key</th><th>Default</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><code>language</code></td><td><code>en_US</code></td><td>Any of the 23 bundled language codes. Files live in <code>languages/</code> and can be edited.</td></tr>
+          <tr><td><code>mysql.enabled</code> …</td><td><code>false</code></td><td>Host, port, database, username, password and <code>table-prefix</code>.</td></tr>
+          <tr><td><code>sounds.*</code></td><td>vanilla sounds</td><td>Sounds for checkpoint, start, finish, reset and teleport-back. Empty string disables one.</td></tr>
+          <tr><td><code>permissions.use-permissions</code></td><td><code>true</code></td><td>Set to false to let everyone use admin commands (not recommended). <code>permissions.admin</code> renames the node.</td></tr>
+          <tr><td><code>locks.enabled</code></td><td><code>true</code></td><td>Global switch for required permission / required completion.</td></tr>
+          <tr><td><code>checkpoints.sequential</code></td><td><code>true</code></td><td>Checkpoints only count in order (1, 2, 3 …). Set to false to let a later checkpoint also count the earlier ones.</td></tr>
+          <tr><td><code>anti-cheat.detect-fly</code></td><td><code>true</code></td><td>Flying players are reset to their checkpoint.</td></tr>
+          <tr><td><code>anti-cheat.detect-teleport</code></td><td><code>false</code></td><td>Cancels teleports and blocks player <code>/tp</code> during a run. Keep off when command blocks teleport players in your course. <code>teleport-threshold</code> is the max distance per move.</td></tr>
+          <tr><td><code>timer-display.type</code></td><td><code>actionbar</code></td><td><code>actionbar</code>, <code>title</code>, <code>bossbar</code><span class="pro-only">, <code>xpbar</code></span> or <code>disabled</code>. <code>format</code> uses <code>%time%</code> and <code>%checkpoints%</code><span class="pro-only">; <code>format-with-limit</code> adds <code>%timelimit%</code> and <code>%remaining%</code></span>.</td></tr>
+          <tr><td><code>bed-confirmation</code></td><td>on, 1000 ms</td><td>Players must double-click the bed item to cancel a run.</td></tr>
+          <tr><td><code>fallback.y-enabled</code> / <code>default-y</code></td><td><code>false</code> / <code>65</code></td><td>Global Y-level fallback for all parkours. <code>teleport-target</code>: <code>reset</code> or <code>checkpoint</code>.</td></tr>
+          <tr class="pro-only"><td><code>fallback.blocks-enabled</code> / <code>default-blocks</code></td><td><code>false</code> / <code>10</code></td><td>Global fall-blocks rule (drop N blocks from the highest point since the last checkpoint).</td></tr>
+          <tr><td><code>death.global-enabled</code> / <code>respawn-to-checkpoint</code></td><td><code>true</code> / <code>true</code></td><td>Handle deaths in any parkour and respawn at the last checkpoint.</td></tr>
+          <tr><td><code>leave.teleport-to</code></td><td><code>reset</code></td><td><code>start</code>, <code>reset</code> or <code>none</code>.</td></tr>
+          <tr><td><code>holograms.*</code></td><td>enabled</td><td>See <a href="#holograms">Holograms</a>.</td></tr>
+          <tr><td><code>default-first-reward-commands</code></td><td>empty</td><td>Commands every new parkour runs on a player's first completion. <code>%player%</code> supported.</td></tr>
+          <tr class="pro-only"><td><code>default-timelimit</code></td><td><code>0</code></td><td>Seconds for new parkours; 0 disables.</td></tr>
+          <tr><td><code>items.hotbar.*</code></td><td>plate, door, bed</td><td>Material, name, slot, click type and lore of the teleport, reset and cancel items.<span class="pro-only"> <code>inventory-mode</code> chooses between clearing the whole inventory or only <code>slots-to-clear</code>.</span></td></tr>
+          <tr><td><code>discord-webhook.*</code></td><td><code>false</code></td><td>Webhook URL, username, which events to post (new record, first completion, season end) and their message templates. Works without a bot.</td></tr>
+          <tr class="pro-only"><td><code>anti-cheat.detect-speed</code></td><td><code>false</code></td><td>Speed check with <code>max-horizontal-speed</code> (blocks per movement packet) and <code>speed-strikes</code>.</td></tr>
+          <tr class="pro-only"><td><code>mysql.sync-interval</code></td><td><code>10</code></td><td>Seconds between checks for records from other servers. 0 disables.</td></tr>
+          <tr class="pro-only"><td><code>ghost.*</code></td><td>enabled</td><td><code>auto-play-on-start</code>, <code>show-player-skin</code>, <code>name-format</code>, <code>max-samples</code>.</td></tr>
+          <tr class="pro-only"><td><code>race.*</code></td><td>2–16 players</td><td>Min/max players, countdown, timeout, sounds and <code>winner-commands</code>.</td></tr>
+          <tr class="pro-only"><td><code>seasons.*</code></td><td>top 3</td><td><code>reward-positions</code>, per-position <code>rewards</code> commands and <code>broadcast</code>.</td></tr>
+          <tr class="pro-only"><td><code>web-api.*</code></td><td><code>false</code></td><td>Bind address, port and optional token.</td></tr>
+          <tr class="pro-only"><td><code>holograms.text.period-leaderboard.*</code></td><td>defaults</td><td>Header lines and labels for the daily / weekly / monthly holograms.</td></tr>
+          <tr><td><code>broadcast.record</code></td><td><code>false</code></td><td>Announce new records to the <code>server</code> or the <code>world</code>.</td></tr>
+          <tr><td><code>features.restart-on-same-start</code></td><td><code>false</code></td><td>Stepping on your own start plate mid-run restarts the timer instead of showing "already in parkour".</td></tr>
+          <tr class="pro-only"><td><code>features.hide-players.*</code></td><td>all false</td><td>What <code>togglehideplayers</code> hides: body, tab entry and/or chat.</td></tr>
+          <tr class="pro-only"><td><code>features.default-dynamic-hologram-visibility</code></td><td><code>false</code></td><td>Default for new parkours.</td></tr>
+          <tr class="pro-only"><td><code>worldguard.enabled</code> / <code>regions</code></td><td><code>false</code></td><td>Plates only work inside the listed WorldGuard region IDs.</td></tr>
+          <tr class="pro-only"><td><code>special-pressure-plates.*</code></td><td>enabled</td><td>Effect amplifiers and durations, build-plate delay and default block offsets.</td></tr>
+          <tr class="pro-only"><td><code>medals.*</code></td><td><code>false</code></td><td>Default thresholds (ms), per-course thresholds and reward commands per medal.</td></tr>
+          <tr class="pro-only"><td><code>default-penaltyoffline-commands</code></td><td>empty</td><td>Commands run when a player disconnects mid-run (new parkours).</td></tr>
+          <tr class="pro-only"><td><code>itemsadder-support</code></td><td><code>true</code></td><td>Copies bundled ItemsAdder font images (timer and checkpoint icons).</td></tr>
+          <tr class="pro-only"><td><code>discord.*</code></td><td><code>false</code></td><td>See <a href="#discord">Discord bot</a>.</td></tr>
+        </tbody>
+      </table></div>
+      <h3>Per-parkour data</h3>
+      <p>Everything set with commands is stored in <code>parkours.yml</code>: locations, checkpoints, hologram text, toggles such as <code>finish-redirect</code>, <code>fallback-y</code>, <code>time-limit</code><span class="pro-only">, <code>proximity-finish</code> and <code>proximity-finish-radius</code></span>. You can edit it by hand and reload, but commands are safer.</p>
+    </section>
+
+    <!-- ============ PLACEHOLDERS ============ -->
+    <section class="doc" id="placeholders">
+      <h2><span class="num">09</span>Placeholders</h2>
+      <p class="lead">With PlaceholderAPI installed, the <code>parkour</code> expansion registers automatically. Use <code>auto</code> as the parkour name when you only have one parkour.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Placeholder</th><th>Result</th></tr></thead>
+        <tbody>
+          <tr><td><code>%parkour_top_&lt;parkour&gt;_&lt;1-10&gt;_player%</code></td><td>Player name at that leaderboard position, <code>---</code> when empty</td></tr>
+          <tr><td><code>%parkour_top_&lt;parkour&gt;_&lt;1-10&gt;_time%</code></td><td>Time at that position, <code>--:--</code> when empty</td></tr>
+          <tr><td><code>%parkour_personal_&lt;parkour&gt;_time%</code></td><td>The viewing player's best time</td></tr>
+          <tr><td><code>%parkour_personal_&lt;parkour&gt;_rank%</code></td><td>The viewing player's rank</td></tr>
+          <tr><td><code>%parkour_count%</code></td><td>Number of parkours</td></tr>
+          <tr><td><code>%parkour_top_&lt;parkour&gt;_&lt;1-10&gt;_prefix%</code></td><td>LuckPerms prefix of the player at that position</td></tr>
+          <tr><td><code>%parkour_current%</code> · <code>%parkour_current_time%</code> · <code>%parkour_current_checkpoint%</code> · <code>%parkour_current_checkpoints%</code></td><td>The viewer's running parkour, live time, current checkpoint and checkpoint count</td></tr>
+          <tr><td><code>%parkour_attempts_&lt;parkour&gt;%</code> · <code>%parkour_completions_&lt;parkour&gt;%</code> · <code>%parkour_playtime_&lt;parkour&gt;%</code> · <code>%parkour_racewins_&lt;parkour&gt;%</code></td><td>The viewer's statistics on that parkour</td></tr>
+        </tbody>
+      </table></div>
+      <pre><span class="c"># Example scoreboard lines</span>
+- <span class="v">"&amp;6#1 &amp;f%parkour_top_sky_1_player% &amp;7- &amp;e%parkour_top_sky_1_time%"</span>
+- <span class="v">"&amp;bYou: &amp;f%parkour_personal_sky_time% &amp;7(#%parkour_personal_sky_rank%)"</span></pre>
+      <h3>Message placeholders</h3>
+      <p>Inside language files and hologram text: <code>%player%</code>, <code>%parkour%</code>, <code>%time%</code>, <code>%checkpoint%</code>, <code>%completed%</code>/<code>%total%</code>, <code>%record%</code>, <code>%status%</code>, <code>%radius%</code>. Colour codes use <code>&amp;</code>, hex colours use <code>#RRGGBB</code>, an empty string disables a message.</p>
+    </section>
+
+    <!-- ============ PERMISSIONS ============ -->
+    <section class="doc" id="permissions">
+      <h2><span class="num">10</span>Permissions</h2>
+      <div class="tbl"><table>
+        <thead><tr><th>Node</th><th>Default</th><th>Grants</th></tr></thead>
+        <tbody>
+          <tr><td><code>parkour.admin</code></td><td>op</td><td>All setup, rules, hologram, record and reload commands. Rename it with <code>permissions.admin</code>.</td></tr>
+          <tr><td><code>parkour.use</code></td><td>everyone</td><td>Running parkours and player commands.</td></tr>
+          <tr class="pro-only"><td><code>parkour.race</code> · <code>parkour.ghost</code> · <code>parkour.menu</code></td><td>everyone</td><td>Races, ghost replays and the parkour menu.</td></tr>
+          <tr><td><i>custom</i></td><td>—</td><td>Any node you set with <code>setrequiredpermission</code> is checked before a run starts.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <!-- ============ GAMEPLAY ============ -->
+    <section class="doc" id="gameplay">
+      <h2><span class="num">11</span>Gameplay &amp; anti-cheat</h2>
+      <div class="feature"><h3>Hotbar items</h3><p>When a run starts the player's inventory is stored and replaced by three items: a plate to teleport to the last checkpoint, a door to reset, and a bed to cancel (double-click). The inventory is restored on finish, cancel or leave. Dropping or moving the items is blocked.</p></div>
+      <div class="feature"><h3>Checkpoints in order <span class="badge new">1.0.8</span></h3><p>Checkpoints must be activated in sequence. Stepping on checkpoint 3 while checkpoint 2 was never reached does nothing except a "you skipped a checkpoint" message, so finishing always means every checkpoint was really touched. <span class="pro-only">Pro can lower the number required with <code>setrequiredcheckpoints</code>, still counted in order.</span> Legacy behaviour is available with <code>checkpoints.sequential: false</code>.</p></div>
+      <div class="feature"><h3>Checkpoint splits <span class="badge new">1.0.9</span></h3><p>Every checkpoint shows the elapsed time and the difference with your own record, green when you are ahead and red when behind. Splits are stored with the record and listed by <code>/parkour pb</code>.</p></div>
+      <div class="feature"><h3>Statistics <span class="badge new">1.0.9</span></h3><p>Attempts, completions, play time and race wins per player and parkour, in <code>stats.yml</code> and MySQL. Shown by <code>pb</code>, the menu, placeholders and the web API.</p></div>
+      <div class="feature"><h3>Cooldown, daily limit and leave radius <span class="badge new">1.0.9</span></h3><p>Per parkour: a cooldown between finishes, a maximum number of starts per day, and a radius around the plates outside of which the run is cancelled.</p></div>
+      <div class="feature"><h3>Timer</h3><p>Shows elapsed time and checkpoints reached. <code>/parkour reset</code> restarts it; with <code>restart-on-same-start</code> stepping on the start plate again does too.</p></div>
+      <div class="feature"><h3>Fly and teleport detection</h3><p>Flying players return to their checkpoint. With <code>detect-teleport</code> on, teleports and <code>/tp</code> are blocked during a run. Plugin teleports (checkpoint, reset) are always allowed.</p></div>
+      <div class="feature"><h3>Fallback</h3><p>A Y-level fallback per parkour or globally. <span class="pro-only">Pro adds the fall-blocks rule: drop more than N blocks from your highest point since the last checkpoint and you are sent back, which works on courses at any height.</span></p></div>
+      <div class="feature"><h3>Death</h3><p>Deaths can keep players in the run and respawn them at their checkpoint or the start, per parkour or globally.</p></div>
+      <div class="feature"><h3>Locks and progression</h3><p>Require a permission or a previously finished parkour before a player may start. Toggle all locks at once with <code>togglelocks</code>.</p></div>
+      <div class="feature"><h3>Rewards</h3><p>End commands run on every finish, first-completion rewards run once per player, and new records can be broadcast to the server or world.</p></div>
+    </section>
+
+    <!-- ============ PRO FEATURES ============ -->
+    <section class="doc pro-only" id="pro-features">
+      <h2><span class="num">12</span>Pro features <span class="badge pro">Pro</span></h2>
+      <div class="feature"><h3>Proximity finish <span class="badge new">1.0.8</span></h3><p>Enable <code>togglefinishproximity</code> and the run ends as soon as the player is within the radius of the end plate, even when the plate is never pressed. Ideal for courses that end with a jump onto the finish, or for players who sneak. Required checkpoints, records, rewards and redirects behave exactly as with the plate.</p></div>
+      <div class="feature"><h3>Ghost replay <span class="badge new">1.0.9</span></h3><p>Every run is sampled about twenty times per second. When a run becomes the fastest time on a parkour it is saved to <code>ghosts/&lt;parkour&gt;.yml</code>. <code>/parkour ghost</code> replays it in real time as an armor stand with the player's head, optionally looping or starting automatically with every run.</p></div>
+      <div class="feature"><h3>Race mode <span class="badge new">1.0.9</span></h3><p>A host creates a race, players join, a countdown with titles freezes everyone on the start plate and all runs start on GO. Positions are announced, the winner gets the configured commands and a race win in the statistics.</p></div>
+      <div class="feature"><h3>Daily, weekly and monthly leaderboards <span class="badge new">1.0.9</span></h3><p>Every finish updates the best time for the current day, ISO week and month. Show them in chat, as extra holograms per parkour, or through the API. Old periods are pruned automatically.</p></div>
+      <div class="feature"><h3>Seasons <span class="badge new">1.0.9</span></h3><p>Closing a season pays the rewards in <code>seasons.rewards</code> to the top players of every parkour, archives all records to <code>records_archive.yml</code> or the archive table, and resets the leaderboards. The change is broadcast and posted to the Discord webhook.</p></div>
+      <div class="feature"><h3>Rewards by time and rank <span class="badge new">1.0.9</span></h3><p>Commands for finishing under a time (every run), for landing on a leaderboard position and for any new personal best, with <code>%player%</code>, <code>%parkour%</code>, <code>%time%</code> and <code>%pos%</code>.</p></div>
+      <div class="feature"><h3>Speed check <span class="badge new">1.0.9</span></h3><p>Resets players that move faster than <code>max-horizontal-speed</code> blocks per movement packet for <code>speed-strikes</code> packets in a row. Speed potions raise the limit. Off by default; tune it per server.</p></div>
+      <div class="feature"><h3>Network sync <span class="badge new">1.0.9</span></h3><p>With a shared MySQL database, <code>mysql.sync-interval</code> polls for records set on other servers and refreshes the affected leaderboard holograms right away.</p></div>
+      <div class="feature"><h3>Web API <span class="badge new">1.0.9</span></h3><p>Read-only JSON on its own port: parkours, leaderboards per period, a player's records and statistics, and the season state. Protect it with a bearer token.</p></div>
+      <div class="feature"><h3>Time limits and penalties</h3><p><code>settimelimit</code> puts a countdown in the timer. When it expires the player is sent to the leave position and penalty commands run. Offline-penalty commands run when a player disconnects mid-run, so leaving to dodge a penalty does not work.</p></div>
+      <div class="feature"><h3>Special pressure plates</h3><p>Effect plates give a jump boost or levitation. Build plates place temporary blocks at configurable offsets and remove them again, for bridges that appear as you run.</p></div>
+      <div class="feature"><h3>Medals</h3><p>Run <code>togglemedals</code>, complete the course yourself as the calibration run, confirm, and gold, silver and bronze thresholds are derived from it. Reward commands per medal fire when a player earns or improves a medal.</p></div>
+      <div class="feature"><h3>Hide players and dynamic holograms</h3><p>Hide other runners' bodies, tab entries or chat inside the same parkour. Dynamic hologram visibility shows each player only the hologram for their next target.</p></div>
+      <div class="feature"><h3>Checkpoint management</h3><p>Delete or move checkpoints without rebuilding the course, and require only a subset of checkpoints to finish.</p></div>
+      <div class="feature"><h3>Testing mode</h3><p>Switch a parkour to testing mode while you tweak it and no first-completion rewards are paid out.</p></div>
+      <div class="feature"><h3>WorldGuard and ItemsAdder</h3><p>Restrict all plates to WorldGuard regions. With ItemsAdder the timer shows custom icons for time and checkpoints.</p></div>
+    </section>
+
+    <!-- ============ DISCORD ============ -->
+    <section class="doc pro-only" id="discord">
+      <h2><span class="num">13</span>Discord bot <span class="badge pro">Pro</span></h2>
+      <p class="lead">A built-in bot that answers <code>/scoreboard parkour:&lt;name&gt;</code> with a rich embed of the top times.</p>
+      <ol class="steps">
+        <li><b>Create a bot</b><p>In the Discord Developer Portal create an application, add a bot and copy its token. Invite it with the <code>applications.commands</code> scope.</p></li>
+        <li><b>Configure</b><p>Set <code>discord.enabled: true</code>, paste the <code>token</code> and optionally a <code>guild-id</code> for instant command registration.</p></li>
+        <li><b>Style the embed</b><p><code>title</code>, <code>color</code>, <code>entry-format</code> (<code>%pos%</code>, <code>%player%</code>, <code>%time%</code>, <code>%rank%</code>), <code>footer</code>, <code>empty-message</code>, column labels and <code>leaderboard-size</code>. With LuckPerms and <code>show-prefix</code> the rank prefix is included.</p></li>
+        <li><b>Reload</b><p><code>/parkour reload</code> re-registers the slash command.</p></li>
+      </ol>
+      <p>Player heads can be shown inline as guild emojis (<code>inline-head-emojis</code>); head URLs are cached for <code>avatar-cache-minutes</code>.</p>
+    </section>
+
+    <!-- ============ WEB API ============ -->
+    <section class="doc pro-only" id="webapi">
+      <h2><span class="num">13b</span>Web API <span class="badge pro">Pro</span> <span class="badge new">1.0.9</span></h2>
+      <p class="lead">A read-only JSON API for websites, Discord bots or dashboards. Enable it with <code>web-api.enabled: true</code>.</p>
+      <pre>GET /api/parkours
+GET /api/leaderboard/&lt;parkour&gt;?limit=10&amp;period=alltime|daily|weekly|monthly
+GET /api/player/&lt;name&gt;
+GET /api/stats/&lt;parkour&gt;
+GET /api/season</pre>
+      <p>With <code>web-api.token</code> set, send <code>Authorization: Bearer &lt;token&gt;</code> or <code>?token=</code>. Responses carry <code>Access-Control-Allow-Origin: *</code> so a browser page can call them directly. Leaderboard entries include the checkpoint splits of each record.</p>
+    </section>
+
+    <!-- ============ STORAGE ============ -->
+    <section class="doc" id="storage">
+      <h2><span class="num">14</span>MySQL &amp; languages</h2>
+      <h3>MySQL</h3>
+      <pre>mysql:
+  enabled: <span class="v">true</span>
+  host: <span class="v">localhost</span>
+  port: <span class="v">3306</span>
+  database: <span class="v">parkourpro</span>
+  username: <span class="v">root</span>
+  password: <span class="v">secret</span>
+  table-prefix: <span class="v">parkour_</span></pre>
+      <p>The table is created on first connect. The prefix may only contain letters, digits and underscores. When the database is unreachable the plugin logs the error and keeps working from <code>records.yml</code>.</p>
+      <h3>Languages</h3>
+      <p>Bundled: en_US, nl_NL, de_DE, fr_FR, es_ES, it_IT, pt_BR, ru_RU, pl_PL, tr_TR, zh_CN, zh_TW, ja_JP, ko_KR, sv_SE, cs_CZ, fi_FI, da_DK, no_NO, ro_RO, uk_UA, el_GR, hu_HU. Edit any file in <code>languages/</code> and reload. Missing keys are filled in from the English defaults so an update never breaks a translation.</p>
+    </section>
+
+    <!-- ============ FAQ ============ -->
+    <section class="doc" id="faq">
+      <h2><span class="num">15</span>FAQ &amp; troubleshooting</h2>
+      <details open><summary>The start plate does nothing</summary><p>The parkour needs both a start and an end (<code>setstart</code> and <code>setend</code>). Check that the plate is a gold plate and, in Pro, that it lies inside the WorldGuard region when that restriction is enabled. Locked parkours also require the permission or prior completion.</p></details>
+      <details><summary>Players get "you must complete all checkpoints"</summary><p>All checkpoints are required and must be activated in order. A player who skipped one sees "you skipped a checkpoint" on later plates and has to go back. <span class="pro-only">Use <code>setrequiredcheckpoints &lt;parkour&gt; &lt;number&gt;</code> to require fewer. </span>Make sure checkpoints were added in course order.</p></details>
+      <details><summary>Command blocks teleport players and they get reset</summary><p>Set <code>anti-cheat.detect-teleport: false</code>. The threshold only applies while that option is on.</p></details>
+      <details><summary>Holograms are invisible or duplicated</summary><p>Run <code>/parkour reload</code>, which removes and recreates every hologram. Check <code>holograms.visibility-range</code>. On modern Paper builds where the modern renderer causes issues, keep <code>modern-renderer.enabled: false</code>.</p></details>
+      <details><summary>A cheater is on top of the leaderboard</summary><p><code>/parkour deletetime &lt;parkour&gt; &lt;player&gt;</code>. The hologram refreshes immediately. If a player's record is wrong, correct it with <code>settime</code>.</p></details>
+      <details><summary>Records disappeared after switching between Pro and Lite</summary><p>Both editions keep their own folder. On first start the plugin copies <code>records.yml</code> from the other edition's folder when its own file has no records. With MySQL both editions share the same table.</p></details>
+      <details><summary>The time limit does not start</summary><p>A time limit needs a leave position: <code>/parkour setleaveposition &lt;parkour&gt;</code> first.</p></details>
+      <details><summary>Which version of Java do I need?</summary><p>Java 8 or newer. The jar is compiled to Java 8 bytecode and has been run on Java 8 through 25.</p></details>
+    </section>
+
+    <!-- ============ CHANGELOG ============ -->
+    <section class="doc" id="changelog">
+      <h2><span class="num">16</span>Changelog</h2>
+      <h3>1.0.9</h3>
+      <ul>
+        <li><b>Both:</b> checkpoint splits, statistics, <code>top</code> and <code>pb</code>, new placeholders, leave radius, cooldown and daily limit, per-parkour sounds and titles, export / import, wizard steps for reset, leave and leaderboard, Discord webhook.</li>
+        <li><b>Pro:</b> ghost replay, race mode, daily / weekly / monthly leaderboards, seasons, parkour menu, speed check, rewards by time and rank, network sync, checkpoint effects, web API.</li>
+      </ul>
+      <h3>1.0.8-1</h3>
+      <ul>
+        <li><b>Both:</b> <code>/parkour deletetime &lt;parkour&gt; &lt;player&gt;</code> wipes a player's record; works for offline players and MySQL; leaderboard refreshes instantly.</li>
+        <li><b>Both:</b> <code>/parkour settime &lt;parkour&gt; &lt;player&gt; &lt;mm:ss.ms&gt;</code> sets or overwrites a record; leaderboard refreshes instantly.</li>
+        <li><b>Both:</b> tab completion for both commands; new messages in the English defaults and the en_US / nl_NL files.</li>
+        <li><b>Pro:</b> <code>/parkour togglefinishproximity &lt;parkour&gt; [radius]</code>, finish without triggering the end pressure plate.</li>
+        <li><b>Both:</b> checkpoints must now be activated in order. Skipping a checkpoint no longer counts the ones in between (<code>checkpoints.sequential</code>, default true).</li>
+      </ul>
+      <h3>1.0.7-1</h3>
+      <ul>
+        <li>Both editions run on Minecraft 26.2.</li>
+        <li>Fixed the TPS and lag issue caused by the leaderboard hologram.</li>
+        <li>Fixed the reset look position.</li>
+        <li><b>Pro:</b> a parkour now only needs a start and an end; checkpoints are optional.</li>
+      </ul>
+    </section>
+
+    <!-- ============ DOWNLOADS ============ -->
+    <section class="doc" id="downloads">
+      <h2><span class="num">17</span>Downloads</h2>
+      <div class="card-grid">
+        <div class="card"><h4>ParkourPro Lite <span class="badge lite">Free</span></h4><p><a href="https://www.spigotmc.org/resources/%E2%AD%90-parkourpro-lite-1-8-1-21-fully-customizable-free-%E2%AD%90.130978/" target="_blank" rel="noopener">SpigotMC</a> · <a href="https://modrinth.com/plugin/parkourpro-lite" target="_blank" rel="noopener">Modrinth</a></p></div>
+        <div class="card"><h4>ParkourPro <span class="badge pro">Premium</span></h4><p><a href="https://builtbybit.com/resources/parkourpro-discord-bot-multi-version.86917/" target="_blank" rel="noopener">BuiltByBit</a> · <a href="https://polymart.org/product/9099/parkourpro-multi-version" target="_blank" rel="noopener">Polymart / Voxelshop</a></p></div>
+      </div>
+      <p>Enjoying the plugin? A review on the platform you downloaded it from helps others find it and keeps development going.</p>
+      <footer>ParkourPro &amp; ParkourPro Lite by Sotermans · Wiki for version 1.0.9 · Minecraft 1.8 – 26.x</footer>
+    </section>
+  </main>
+</div>
+
+<script>
+(function(){
+  /* ---------- edition switch ---------- */
+  var body=document.body;
+  var buttons={both:document.getElementById('edBoth'),pro:document.getElementById('edPro'),lite:document.getElementById('edLite')};
+  function setEdition(ed){
+    body.setAttribute('data-edition',ed);
+    Object.keys(buttons).forEach(function(k){buttons[k].setAttribute('aria-pressed',String(k===ed));});
+    try{localStorage.setItem('pkwiki-edition',ed);}catch(e){}
+  }
+  Object.keys(buttons).forEach(function(k){buttons[k].addEventListener('click',function(){setEdition(k);});});
+  var saved='both';
+  try{saved=localStorage.getItem('pkwiki-edition')||'both';}catch(e){}
+  setEdition(buttons[saved]?saved:'both');
+
+  /* ---------- mobile nav ---------- */
+  var menuBtn=document.getElementById('menuBtn'),backdrop=document.getElementById('backdrop'),sidebar=document.getElementById('sidebar');
+  menuBtn.addEventListener('click',function(){body.classList.toggle('nav-open');});
+  backdrop.addEventListener('click',function(){body.classList.remove('nav-open');});
+  sidebar.addEventListener('click',function(e){if(e.target.tagName==='A')body.classList.remove('nav-open');});
+
+  /* ---------- active section highlight ---------- */
+  var links=Array.prototype.slice.call(sidebar.querySelectorAll('a'));
+  var sections=links.map(function(a){return document.querySelector(a.getAttribute('href'));}).filter(Boolean);
+  function highlight(){
+    var y=window.scrollY+120,current=sections[0];
+    sections.forEach(function(s){if(s.offsetTop<=y)current=s;});
+    links.forEach(function(a){a.classList.toggle('active',a.getAttribute('href')==='#'+current.id);});
+  }
+  window.addEventListener('scroll',highlight,{passive:true});
+  highlight();
+
+  /* ---------- command category filter ---------- */
+  var filterBtns=document.querySelectorAll('.cmd-filter button');
+  var cmdItems=document.querySelectorAll('#cmdList [data-cat]');
+  filterBtns.forEach(function(b){
+    b.addEventListener('click',function(){
+      var cat=b.getAttribute('data-cat');
+      filterBtns.forEach(function(x){x.setAttribute('aria-pressed',String(x===b));});
+      cmdItems.forEach(function(el){el.hidden=!(cat==='all'||el.getAttribute('data-cat')===cat);});
+    });
+  });
+
+  /* ---------- search ---------- */
+  var index=[];
+  document.querySelectorAll('.cmd').forEach(function(c){
+    index.push({t:c.querySelector('.sig').textContent.trim(),d:c.querySelector('.desc').textContent.trim(),el:c,where:'Commands'});
+  });
+  document.querySelectorAll('#config tbody tr, #placeholders tbody tr, #holograms tbody tr').forEach(function(tr){
+    var cells=tr.querySelectorAll('td'); if(cells.length<2)return;
+    var sec=tr.closest('section');
+    index.push({t:cells[0].textContent.trim(),d:cells[cells.length-1].textContent.trim(),el:tr,where:sec.querySelector('h2').textContent.replace(/^\d+\s*/,'').trim()});
+  });
+  document.querySelectorAll('section.doc h3, details summary').forEach(function(h){
+    var sec=h.closest('section');
+    index.push({t:h.textContent.trim(),d:'',el:h,where:sec?sec.querySelector('h2').textContent.replace(/^\d+\s*/,'').trim():''});
+  });
+  var box=document.getElementById('searchBox'),out=document.getElementById('searchResults');
+  var counter=0;
+  function ensureId(el){if(!el.id){el.id='s-'+(++counter);}return el.id;}
+  function runSearch(){
+    var q=box.value.trim().toLowerCase();
+    out.innerHTML='';
+    if(q.length<2){out.classList.remove('open');return;}
+    var hits=index.filter(function(i){return (i.t+' '+i.d).toLowerCase().indexOf(q)>=0;}).slice(0,12);
+    if(!hits.length){out.innerHTML='<div class="none">No matches for “'+q.replace(/</g,'&lt;')+'”</div>';out.classList.add('open');return;}
+    hits.forEach(function(h){
+      var a=document.createElement('a');a.href='#'+ensureId(h.el);a.setAttribute('role','option');
+      a.innerHTML='<strong></strong><span></span>';
+      a.querySelector('strong').textContent=h.t;a.querySelector('span').textContent=h.where+(h.d?' · '+h.d.slice(0,90):'');
+      a.addEventListener('click',function(){out.classList.remove('open');
+        if(h.el.tagName==='SUMMARY')h.el.parentElement.open=true;
+        if(h.el.classList.contains('cmd')){filterBtns[0].click();}
+        if(h.el.classList.contains('pro-only')&&body.getAttribute('data-edition')==='lite')setEdition('both');
+        if(h.el.classList.contains('lite-only')&&body.getAttribute('data-edition')==='pro')setEdition('both');
+      });
+      out.appendChild(a);
+    });
+    out.classList.add('open');
+  }
+  box.addEventListener('input',runSearch);
+  box.addEventListener('focus',runSearch);
+  document.addEventListener('click',function(e){if(!e.target.closest('.search'))out.classList.remove('open');});
+  box.addEventListener('keydown',function(e){if(e.key==='Escape'){out.classList.remove('open');box.blur();}});
+
+  /* ---------- time parser demo (mirrors the plugin's parseTimeInput) ---------- */
+  function parseTimeInput(raw){
+    if(raw==null)return -1;var v=raw.trim().replace(',','.');if(!v)return -1;
+    var main=v,millis=0,dot=v.indexOf('.');
+    if(dot>=0){main=v.slice(0,dot);var f=v.slice(dot+1);if(!/^\d{1,3}$/.test(f))return -1;millis=parseInt((f+'00').slice(0,3),10);}
+    var parts=main.split(':');if(parts.length>3)return -1;var total=0;
+    for(var i=0;i<parts.length;i++){if(!/^\d{1,6}$/.test(parts[i]))return -1;var n=parseInt(parts[i],10);if(i>0&&n>=60)return -1;total=total*60+n;}
+    var r=total*1000+millis;return r>0?r:-1;
+  }
+  function fmt(ms){var s=Math.floor(ms/1000),m=Math.floor(s/60),h=Math.floor(m/60),mm=ms%1000;s%=60;m%=60;
+    function p(n,w){n=String(n);while(n.length<w)n='0'+n;return n;}
+    return h>0?p(h,2)+':'+p(m,2)+':'+p(s,2)+'.'+p(mm,3):(m>0?p(m,2)+':'+p(s,2)+'.'+p(mm,3):p(s,2)+'.'+p(mm,3));}
+  var ti=document.getElementById('timeInput'),to=document.getElementById('timeOut');
+  function upd(){var ms=parseTimeInput(ti.value);
+    if(ms<0){to.className='out bad';to.innerHTML='<b>Invalid time.</b> Use mm:ss.ms, for example 01:23.456';}
+    else{to.className='out';to.innerHTML='Stored as <b>'+ms+' ms</b> · shown on the leaderboard as <b>'+fmt(ms)+'</b>';}}
+  ti.addEventListener('input',upd);upd();
+
+  /* ---------- hero: parkour blocks canvas ---------- */
+  var cv=document.getElementById('heroCanvas');
+  if(cv&&cv.getContext){
+    var ctx=cv.getContext('2d'),W,H,blocks=[],t=0;
+    var reduce=window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function size(){var r=cv.parentElement.getBoundingClientRect();W=cv.width=Math.max(300,r.width)*devicePixelRatio;H=cv.height=r.height*devicePixelRatio;
+      blocks=[];var n=Math.round(W/devicePixelRatio/26);
+      for(var i=0;i<n;i++){blocks.push({x:i/n,y:0.55+Math.sin(i*0.9)*0.18+Math.random()*0.12,w:0.5+Math.random()*0.7,g:i%7===0?1:(i%11===0?2:0)});}}
+    function draw(){ctx.clearRect(0,0,W,H);
+      var unit=W/blocks.length,bh=H*0.08;
+      for(var i=0;i<blocks.length;i++){var b=blocks[i];
+        var yy=(b.y+(reduce?0:Math.sin(t*0.6+i*0.5)*0.015))*H;var ww=unit*b.w,xx=b.x*W+(unit-ww)/2;
+        ctx.fillStyle=b.g===1?'#e0a100':(b.g===2?'#cfd3da':'#2a2e3a');ctx.fillRect(xx,yy,ww,bh);
+        ctx.fillStyle=b.g===1?'#ffcf4d':(b.g===2?'#ffffff':'#3a3f4d');ctx.fillRect(xx,yy,ww,bh*0.22);
+        ctx.fillStyle='rgba(0,0,0,.28)';ctx.fillRect(xx,yy+bh,ww,H);
+      }
+      var px=((t*0.05)%1.2-0.1)*W,idx=Math.max(0,Math.min(blocks.length-1,Math.floor(px/unit)));var base=blocks[idx].y*H;
+      var jump=Math.abs(Math.sin(t*2.2))*H*0.12;var py=base-jump-H*0.12;
+      ctx.fillStyle='#ffd166';ctx.fillRect(px-6*devicePixelRatio,py,12*devicePixelRatio,H*0.12);
+      ctx.fillStyle='#fff';ctx.fillRect(px-6*devicePixelRatio,py,12*devicePixelRatio,H*0.035);
+      var grad=ctx.createLinearGradient(0,0,0,H);grad.addColorStop(0,'rgba(11,13,18,.05)');grad.addColorStop(1,'rgba(11,13,18,.75)');ctx.fillStyle=grad;ctx.fillRect(0,0,W,H);
+      if(!reduce){t+=1/60;requestAnimationFrame(draw);} }
+    size();draw();window.addEventListener('resize',function(){size();if(reduce)draw();});
+  }
+})();
+</script>
+
+</body>
+</html>
