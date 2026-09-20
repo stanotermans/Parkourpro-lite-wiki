@@ -36,5 +36,5 @@ Documentation for **ParkourPro** (premium) and **ParkourPro Lite** (free), versi
 
 ## Downloads
 
-- ParkourPro Lite (free): [SpigotMC](https://www.spigotmc.org/resources/%E2%AD%90-parkourpro-lite-1-8-1-21-fully-customizable-free-%E2%AD%90.130978/) · [Modrinth](https://modrinth.com/plugin/parkourpro-lite)
+- ParkourPro Lite (free): [SpigotMC](https://www.spigotmc.org/resources/%E2%AD%90-parkourpro-lite-1-8-1-21-fully-customizable-free-%E2%AD%90.130978/) · [Modrinth](https://modrinth.com/plugin/parkourpro-lite) · [CurseForge](https://www.curseforge.com/minecraft/bukkit-plugins/parkourpro-lite-1-8-26-3-create-awesome-parkours)
 - ParkourPro (premium): [BuiltByBit](https://builtbybit.com/resources/parkourpro-discord-bot-multi-version.86917/) · [Polymart](https://polymart.org/product/9099/parkourpro-multi-version)
