@@ -47,3 +47,7 @@ Need a language that is not bundled, found a bug, or want help setting something
 - **New language**: ask in the server, or translate `languages/en_US.yml` yourself and send it in; it will be bundled in the next release.
 - **Bugs**: post your server version, plugin edition and version, and the console log around the error.
 - **Feature requests and setup help**: welcome as well. Pro buyers get priority support.
+
+## Leave a review
+
+Enjoying the plugin? A review on the platform you downloaded it from helps others find it and keeps development going: [SpigotMC](https://www.spigotmc.org/resources/%E2%AD%90-parkourpro-lite-1-8-1-21-fully-customizable-free-%E2%AD%90.130978/reviews) · [Modrinth](https://modrinth.com/plugin/parkourpro-lite) · [CurseForge](https://www.curseforge.com/minecraft/bukkit-plugins/parkourpro-lite-1-8-26-3-create-awesome-parkours) · [BuiltByBit](https://builtbybit.com/resources/parkourpro-discord-bot-multi-version.86917/reviews) · [Polymart](https://polymart.org/product/9099/parkourpro-multi-version). Thank you!
