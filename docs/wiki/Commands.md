@@ -855,6 +855,7 @@ Example:
 | [`/parkour removehologram <parkour> <all\|start\|end\|leaderboard\|checkpoint[:#]>`](#removehologram) | Pro + Lite | Hides a hologram. |
 | [`/parkour sethologramdisplay <parkour> <all\|start\|end\|checkpoint[:N]\|leaderboard> <background\|opacity\|seethrough\|billboard\|scale> <value>`](#sethologramdisplay) | **Pro only** | Styling for text-display holograms (Paper 1.19.4+): background hex or `transparent`, opacity 0–255, `seethrough true|false`, billboard `center|fixed|vertical|horizontal`, scale. |
 | [`/parkour addperiodleaderboard <parkour> <daily\|weekly\|monthly>`](#addperiodleaderboard) | **Pro only** | Extra leaderboard hologram for the current day, ISO week or month at the block you look at. |
+| [`/parkour mapboard <add <parkour> [alltime\|daily\|weekly\|monthly] [WxH] \| remove [parkour] \| list \| refresh>`](#mapboard) | **Pro only** | Leaderboard poster on maps in a grid of item frames: header, podium with player heads, ranked rows and footer. |
 | [`/parkour toggledynamichologram <parkour>`](#toggledynamichologram) | **Pro only** | Each player only sees the hologram that matters for their progress. |
 
 ### sethologram
@@ -970,6 +971,24 @@ Example:
 ```
 
 > New in 1.0.9.
+
+### mapboard
+
+```
+/parkour mapboard <add <parkour> [alltime|daily|weekly|monthly] [WxH] | remove [parkour] | list | refresh>
+```
+
+Edition: **Pro only**
+
+Leaderboard poster on maps in a grid of item frames: header, podium with player heads, ranked rows and footer. Hang the top-left item frame on a wall, look at it and run `add`. Missing frames of the grid are placed automatically. `remove` removes the board you look at (or all boards of a parkour), `refresh` re-renders everything.
+
+Example:
+
+```
+/parkour mapboard add sky weekly 3x4
+```
+
+> New in 1.1.0. Default size 3x4 frames; colours, header, tag and footer under `map-boards` in config.yml.
 
 ### toggledynamichologram
 
@@ -1319,7 +1338,26 @@ Example:
 
 | Command | Edition | What it does |
 |---|---|---|
+| [`/parkour version`](#version) | Pro + Lite | Shows the installed version and checks the ParkourPro website for a newer release. |
 | [`/parkour reload`](#reload) | Pro + Lite | Reloads config, parkours, holograms, timer display and languages. |
+
+### version
+
+```
+/parkour version
+```
+
+Edition: Pro + Lite
+
+Shows the installed version and checks the ParkourPro website for a newer release.
+
+Example:
+
+```
+/parkour version
+```
+
+> New in 1.1.0. Admins are also told on join when an update is available (`update-checker` in config.yml).
 
 ### reload
 

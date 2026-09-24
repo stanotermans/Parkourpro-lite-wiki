@@ -11,7 +11,7 @@
 
 ## First start
 
-1. Put `ParkourPro-1.0.9.jar` **or** `ParkourProLite-1.0.9.jar` in `plugins/`. Never run both at once.
+1. Put `ParkourPro-1.1.0.jar` **or** `ParkourProLite-1.1.0.jar` in `plugins/`. Never run both at once.
 2. Restart the server. The plugin creates `config.yml`, `parkours.yml`, `records.yml`, `stats.yml` and a `languages/` folder with 23 translations.
 3. Set `language` in `config.yml` (for example `nl_NL`).
 4. Optional: enable `mysql` for networks. Without MySQL everything is stored in YAML files.

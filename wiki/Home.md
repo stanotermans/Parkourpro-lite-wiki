@@ -1,6 +1,6 @@
 # ParkourPro Wiki
 
-Documentation for **ParkourPro** (premium) and **ParkourPro Lite** (free), version 1.0.9, for Spigot and Paper on Minecraft **1.8 through 26.x**.
+Documentation for **ParkourPro** (premium) and **ParkourPro Lite** (free), version 1.1.0, for Spigot and Paper on Minecraft **1.8 through 26.x**.
 
 | Page | Contents |
 |---|---|
@@ -32,6 +32,8 @@ Documentation for **ParkourPro** (premium) and **ParkourPro Lite** (free), versi
 | Proximity finish, time limits, penalties, fall-blocks | – | ✓ |
 | Ghost replay, race mode, seasons, daily/weekly/monthly leaderboards | – | ✓ |
 | Menu, rewards by time and rank, checkpoint effects, speed check | – | ✓ |
+| Item frame map boards (leaderboard posters on maps) | – | ✓ |
+| Update checker with admin notification | ✓ | ✓ |
 | Special pressure plates, medals, hide players, dynamic holograms | – | ✓ |
 | Network sync, web API, Discord bot, WorldGuard, ItemsAdder | – | ✓ |
 

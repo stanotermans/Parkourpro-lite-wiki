@@ -43,6 +43,16 @@ Old periods are pruned automatically. Stored in `period_records.yml` and `<prefi
 
 `/parkour season new Winter confirm` closes the season: rewards from `seasons.rewards` go to the top players of every parkour, all records are archived and the leaderboards start empty. The change is broadcast and posted to the Discord webhook.
 
+## Item frame map boards
+
+A leaderboard poster rendered onto maps in a grid of item frames, like a wall-mounted screen: header with your server name, a podium with the top three heads, ranked rows and a footer.
+
+1. Hang item frames on a wall (or only the top-left one; the rest is placed automatically when there is a wall behind them).
+2. Look at the top-left frame and run `/parkour mapboard add sky` (all-time) or `/parkour mapboard add sky weekly 3x4`.
+3. Style it under `map-boards` in config.yml: header, tag, title, footer and every colour.
+
+Boards refresh with the leaderboards and immediately after new records, `deletetime`, `settime` and season changes. Player heads are fetched from the skin services and cached; offline-mode servers get a default face. Sizes from 1x1 to 8x8 (max 48 frames). Rendering uses a built-in pixel font, so it works on headless servers and on 1.8 through modern versions.
+
 ## Menu
 
 `/parkour menu` opens an inventory with every parkour, your best time and rank, the record holder and your attempts. Click to teleport to the start. Permission `parkour.menu`.

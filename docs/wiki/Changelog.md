@@ -1,5 +1,20 @@
 # Changelog
 
+## 1.1.0
+
+### Pro only
+
+- **Item frame map boards**: a leaderboard poster rendered onto maps in a grid of item frames (header, podium with player heads, ranked rows, footer). Hang the top-left frame on a wall, look at it and run `/parkour mapboard add <parkour> [alltime|daily|weekly|monthly] [WxH]`. Missing frames are placed automatically. Colours and texts are configurable under `map-boards`. Boards refresh with the leaderboards and instantly after record changes. Works on 1.8 through modern versions (built-in pixel font, no system fonts needed).
+- `/parkour mapboard remove [parkour]`, `list` and `refresh`.
+
+### Pro and Lite
+
+- **Update checker**: the plugin checks the ParkourPro website for a newer release on startup and every 6 hours. Admins are told on join, the console logs it, and `/parkour version` checks on demand. Configurable under `update-checker`.
+
+### Other
+
+- Version bumped to 1.1.0 for both editions.
+
 ## 1.0.9
 
 ### Pro and Lite

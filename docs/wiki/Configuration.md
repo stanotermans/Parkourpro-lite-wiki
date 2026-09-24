@@ -88,6 +88,34 @@ All settings live in `config.yml`. Run `/parkour reload` after editing. Keys mar
 | `features.default-dynamic-hologram-visibility` **Pro** | `false` | Default for new parkours |
 | `medals.*` **Pro** | off | Default thresholds (ms), per-course thresholds and reward commands |
 
+## Update checker (both editions)
+
+| Key | Default | Description |
+|---|---|---|
+| `update-checker.enabled` | `true` | Check the ParkourPro website for a newer release |
+| `update-checker.notify-admins` | `true` | Tell players with `parkour.admin` on join |
+| `update-checker.interval-hours` | `6` | Hours between checks |
+| `update-checker.url` | wiki `version.json` | Where the latest version is published |
+
+## Map boards (Pro)
+
+```yaml
+map-boards:
+  default-width: 3
+  default-height: 4
+  header: "ParkourPro"        # your server name, top-left
+  tag: "PARKOUR"              # pill top-right
+  title: "Leaderboard: %parkour%"
+  footer: "play.yourserver.net"
+  show-heads: true
+  colors:
+    background: "#101215"
+    header: "#F2B915"
+    accent: "#FF5F9E"
+    time: "#F2E15A"
+    # ... panel, row, line, accent-text, title, name, rank, footer, gold, silver, bronze
+```
+
 ## Discord webhook (both editions)
 
 ```yaml

@@ -272,7 +272,7 @@ footer a{color:var(--ink-2)}
         <div class="stat"><b>1.8 – 26.x</b><span>Minecraft versions</span></div>
         <div class="stat"><b>23</b><span>Bundled languages</span></div>
         <div class="stat"><b>90+</b><span>Subcommands (Pro)</span></div>
-        <div class="stat"><b>v1.0.9</b><span>Current release</span></div>
+        <div class="stat"><b>v1.1.0</b><span>Current release</span></div>
       </div>
       <div class="card-grid">
         <div class="card"><div class="ico">🏁</div><h4>Pressure-plate courses</h4><p>Gold plates start and finish a run, iron plates are checkpoints. No schematics, no region tools: walk the course and place plates.</p></div>
@@ -306,6 +306,8 @@ footer a{color:var(--ink-2)}
           <tr><td>Race mode with countdown and winner tracking</td><td class="no">—</td><td class="yes">✓</td></tr>
           <tr><td>Daily / weekly / monthly leaderboards and seasons with rewards</td><td class="no">—</td><td class="yes">✓</td></tr>
           <tr><td>Parkour menu, rewards by time and rank, checkpoint effects, speed check, network sync, web API</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Item frame map boards (leaderboard posters on maps)</td><td class="no">—</td><td class="yes">✓</td></tr>
+          <tr><td>Update checker with admin notification</td><td class="yes">✓</td><td class="yes">✓</td></tr>
           <tr><td>Finish without triggering the end plate (proximity finish)</td><td class="no">—</td><td class="yes">✓</td></tr>
           <tr><td>Time limits with penalty and offline-penalty commands</td><td class="no">—</td><td class="yes">✓</td></tr>
           <tr><td>Fall-blocks fallback (drop N blocks from highest point)</td><td class="no">—</td><td class="yes">✓</td></tr>
@@ -327,7 +329,7 @@ footer a{color:var(--ink-2)}
       <h2><span class="num">02</span>Installation</h2>
       <p class="lead">One jar, no hard dependencies. Everything else is optional and detected automatically.</p>
       <ol class="steps">
-        <li><b>Drop the jar in <code>plugins/</code></b><p>Use <code>ParkourPro-1.0.9.jar</code> or <code>ParkourProLite-1.0.9.jar</code>. Never run both editions at the same time.</p></li>
+        <li><b>Drop the jar in <code>plugins/</code></b><p>Use <code>ParkourPro-1.1.0.jar</code> or <code>ParkourProLite-1.1.0.jar</code>. Never run both editions at the same time.</p></li>
         <li><b>Restart the server</b><p>The plugin writes <code>config.yml</code>, <code>parkours.yml</code>, <code>records.yml</code> and a <code>languages/</code> folder with all 23 translations.</p></li>
         <li><b>Pick a language and storage</b><p>Set <code>language</code> in config.yml (for example <code>nl_NL</code>). Enable <code>mysql</code> if you run a network, otherwise records stay in <code>records.yml</code>.</p></li>
         <li><b>Optional add-ons</b><p>LuckPerms (rank prefixes on holograms), PlaceholderAPI (placeholders), <span class="pro-only">WorldGuard (region restriction), ItemsAdder (custom icons in the timer), </span>and for Pro a Discord bot token.</p></li>
@@ -457,6 +459,7 @@ footer a{color:var(--ink-2)}
       <div class="cmd" data-cat="holo"><div class="sig">/parkour removehologram <span class="arg">&lt;parkour&gt; &lt;all|start|end|leaderboard|checkpoint[:#]&gt;</span></div><p class="desc">Hides a hologram. Re-enable it with <code>sethologram</code> or <code>addleaderboard</code>.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
       <div class="cmd pro-only" data-cat="holo"><div class="sig">/parkour sethologramdisplay <span class="arg">&lt;parkour&gt; &lt;all|start|end|checkpoint[:N]|leaderboard&gt; &lt;property&gt; &lt;value&gt;</span></div><p class="desc">Styling on text-display holograms (Paper 1.19.4+): <code>background</code> (hex or transparent), <code>opacity</code> 0–255, <code>seethrough</code>, <code>billboard</code> (center, fixed, vertical, horizontal), <code>scale</code>.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
       <div class="cmd pro-only" data-cat="holo"><div class="sig">/parkour addperiodleaderboard <span class="arg">&lt;parkour&gt; &lt;daily|weekly|monthly&gt;</span></div><p class="desc">Daily, weekly or monthly leaderboard hologram at the block you look at. <code>removeperiodleaderboard</code> removes it.</p><div class="meta"><span class="badge pro">Pro</span><span class="badge new">New in 1.0.9</span></div></div>
+      <div class="cmd pro-only" data-cat="holo"><div class="sig">/parkour mapboard <span class="arg">&lt;add &lt;parkour&gt; [alltime|daily|weekly|monthly] [WxH] | remove [parkour] | list | refresh&gt;</span></div><p class="desc">Leaderboard poster on maps in a grid of item frames: header, podium with player heads, ranked rows, footer. Look at the top-left frame on a wall and run <code>add</code>; missing frames are placed automatically. Colours and texts under <code>map-boards</code>.</p><div class="meta"><span class="badge pro">Pro</span><span class="badge new">New in 1.1.0</span></div></div>
       <div class="cmd pro-only" data-cat="holo"><div class="sig">/parkour toggledynamichologram <span class="arg">&lt;parkour&gt;</span></div><p class="desc">Each player only sees the hologram that matters for their progress (next checkpoint, then the finish).</p><div class="meta"><span class="badge pro">Pro</span></div></div>
 
       <h3 data-cat="records">Records</h3>
@@ -482,6 +485,7 @@ footer a{color:var(--ink-2)}
       <div class="cmd pro-only" data-cat="player"><div class="sig">/parkour language <span class="arg">&lt;code&gt;</span></div><p class="desc">Switches the server language, for example <code>nl_NL</code>.</p><div class="meta"><span class="badge pro">Pro</span></div></div>
 
       <h3 data-cat="admin">Admin</h3>
+      <div class="cmd" data-cat="admin"><div class="sig">/parkour version</div><p class="desc">Shows the installed version and checks the ParkourPro website for a newer release. Admins are also told on join when an update is available.</p><div class="meta"><span class="badge both">Pro + Lite</span><span class="badge new">New in 1.1.0</span></div></div>
       <div class="cmd" data-cat="admin"><div class="sig">/parkour reload</div><p class="desc">Reloads config, parkours, holograms, timer display and languages<span class="pro-only">, and re-registers Discord commands</span>.</p><div class="meta"><span class="badge both">Pro + Lite</span></div></div>
       </div>
     </section>
@@ -582,6 +586,8 @@ footer a{color:var(--ink-2)}
           <tr><td><code>default-first-reward-commands</code></td><td>empty</td><td>Commands every new parkour runs on a player's first completion. <code>%player%</code> supported.</td></tr>
           <tr class="pro-only"><td><code>default-timelimit</code></td><td><code>0</code></td><td>Seconds for new parkours; 0 disables.</td></tr>
           <tr><td><code>items.hotbar.*</code></td><td>plate, door, bed</td><td>Material, name, slot, click type and lore of the teleport, reset and cancel items.<span class="pro-only"> <code>inventory-mode</code> chooses between clearing the whole inventory or only <code>slots-to-clear</code>.</span></td></tr>
+          <tr><td><code>update-checker.*</code></td><td><code>true</code></td><td>Checks the website for a newer release on startup and every <code>interval-hours</code>; <code>notify-admins</code> tells admins on join.</td></tr>
+          <tr class="pro-only"><td><code>map-boards.*</code></td><td>3x4</td><td>Default size, header, tag, title, footer, <code>show-heads</code> and every colour of the item frame boards.</td></tr>
           <tr><td><code>discord-webhook.*</code></td><td><code>false</code></td><td>Webhook URL, username, which events to post (new record, first completion, season end) and their message templates. Works without a bot.</td></tr>
           <tr class="pro-only"><td><code>anti-cheat.detect-speed</code></td><td><code>false</code></td><td>Speed check with <code>max-horizontal-speed</code> (blocks per movement packet) and <code>speed-strikes</code>.</td></tr>
           <tr class="pro-only"><td><code>mysql.sync-interval</code></td><td><code>10</code></td><td>Seconds between checks for records from other servers. 0 disables.</td></tr>
@@ -664,6 +670,7 @@ footer a{color:var(--ink-2)}
     <section class="doc pro-only" id="pro-features">
       <h2><span class="num">12</span>Pro features <span class="badge pro">Pro</span></h2>
       <div class="feature"><h3>Proximity finish <span class="badge new">1.0.8</span></h3><p>Enable <code>togglefinishproximity</code> and the run ends as soon as the player is within the radius of the end plate, even when the plate is never pressed. Ideal for courses that end with a jump onto the finish, or for players who sneak. Required checkpoints, records, rewards and redirects behave exactly as with the plate.</p></div>
+      <div class="feature"><h3>Item frame map boards <span class="badge new">1.1.0</span></h3><p>A leaderboard poster rendered onto maps in a grid of item frames, like a wall-mounted screen: your server name in the header, a podium with the top three heads, ranked rows and a footer. Hang the top-left frame, look at it and run <code>/parkour mapboard add &lt;parkour&gt; [period] [WxH]</code>. Boards refresh with the leaderboards and instantly after record changes. Rendering uses a built-in pixel font, so it works on headless servers and on 1.8 through modern versions.</p></div>
       <div class="feature"><h3>Ghost replay <span class="badge new">1.0.9</span></h3><p>Every run is sampled about twenty times per second. When a run becomes the fastest time on a parkour it is saved to <code>ghosts/&lt;parkour&gt;.yml</code>. <code>/parkour ghost</code> replays it in real time as an armor stand with the player's head, optionally looping or starting automatically with every run.</p></div>
       <div class="feature"><h3>Race mode <span class="badge new">1.0.9</span></h3><p>A host creates a race, players join, a countdown with titles freezes everyone on the start plate and all runs start on GO. Positions are announced, the winner gets the configured commands and a race win in the statistics.</p></div>
       <div class="feature"><h3>Daily, weekly and monthly leaderboards <span class="badge new">1.0.9</span></h3><p>Every finish updates the best time for the current day, ISO week and month. Show them in chat, as extra holograms per parkour, or through the API. Old periods are pruned automatically.</p></div>
@@ -740,6 +747,11 @@ GET /api/season</pre>
     <!-- ============ CHANGELOG ============ -->
     <section class="doc" id="changelog">
       <h2><span class="num">16</span>Changelog</h2>
+      <h3>1.1.0</h3>
+      <ul>
+        <li><b>Pro:</b> item frame map boards, a leaderboard poster on maps with header, podium heads, rows and footer (<code>/parkour mapboard</code>).</li>
+        <li><b>Both:</b> update checker with admin notification on join and <code>/parkour version</code>.</li>
+      </ul>
       <h3>1.0.9</h3>
       <ul>
         <li><b>Both:</b> checkpoint splits, statistics, <code>top</code> and <code>pb</code>, new placeholders, leave radius, cooldown and daily limit, per-parkour sounds and titles, export / import, wizard steps for reset, leave and leaderboard, Discord webhook.</li>
@@ -783,7 +795,7 @@ GET /api/season</pre>
         <li><b>Feature requests and setup help:</b> welcome as well. Pro buyers get priority support.</li>
         <li><b>Happy with the plugin?</b> Leave a review on <a href="#downloads">the platform you downloaded it from</a>. It is the best way to support the project.</li>
       </ul>
-      <footer>ParkourPro &amp; ParkourPro Lite by Sotermans · Wiki for version 1.0.9 · Minecraft 1.8 – 26.x</footer>
+      <footer>ParkourPro &amp; ParkourPro Lite by Sotermans · Wiki for version 1.1.0 · Minecraft 1.8 – 26.x</footer>
     </section>
   </main>
 </div>
