@@ -6,7 +6,7 @@ ParkourPro Lite is also available for [Pumpkin](https://pumpkinmc.org/), the Min
 
 ## Installation
 
-1. Download the `.wasm` file from the [Pumpkin Market](https://market.pumpkinmc.org/). Pick the file that matches your Pumpkin version.
+1. Download the `.wasm` file from the [Pumpkin Market](https://market.pumpkinmc.org/plugin/80-parkourprolite). Pick the file that matches your Pumpkin version.
 2. Put it in the `plugins/` folder of your Pumpkin server and start the server.
 3. On first start Pumpkin asks to allow `fs.write.data`. The plugin needs it to save parkours, records and settings in its own data folder. Answer `y`.
 4. Set `language` in `config.yml` (for example `nl_NL`) and run `/parkour reload`.
