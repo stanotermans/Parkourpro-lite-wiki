@@ -3,6 +3,7 @@
 - [Home](Home)
 - [Installation](Installation)
 - [Getting Started](Getting-Started)
+- [Pumpkin edition](Pumpkin)
 - [Commands](Commands)
 - [Configuration](Configuration)
 - [Holograms](Holograms)

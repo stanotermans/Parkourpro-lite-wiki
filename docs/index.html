@@ -227,6 +227,7 @@ footer a{color:var(--ink-2)}
       <a href="#install">Installation</a>
       <a href="#quickstart">Your first parkour</a>
       <a href="#wizard">Creation wizard</a>
+      <a href="#pumpkin">Pumpkin edition</a>
     </div>
     <div class="group"><span>Reference</span>
       <a href="#commands">Commands</a>
@@ -779,14 +780,133 @@ GET /api/season</pre>
       <h2><span class="num">17</span>Downloads</h2>
       <div class="card-grid">
         <div class="card"><h4>ParkourPro Lite <span class="badge lite">Free</span></h4><p><a href="https://www.spigotmc.org/resources/%E2%AD%90-parkourpro-lite-1-8-1-21-fully-customizable-free-%E2%AD%90.130978/" target="_blank" rel="noopener">SpigotMC</a> · <a href="https://modrinth.com/plugin/parkourpro-lite" target="_blank" rel="noopener">Modrinth</a> · <a href="https://www.curseforge.com/minecraft/bukkit-plugins/parkourpro-lite-1-8-26-3-create-awesome-parkours" target="_blank" rel="noopener">CurseForge</a></p></div>
+        <div class="card"><h4>ParkourPro Lite for Pumpkin <span class="badge lite">Free</span></h4><p><a href="https://market.pumpkinmc.org/" target="_blank" rel="noopener">Pumpkin Market</a> · <a href="#pumpkin">Pumpkin edition</a></p></div>
         <div class="card"><h4>ParkourPro <span class="badge pro">Premium</span></h4><p><a href="https://builtbybit.com/resources/parkourpro-discord-bot-multi-version.86917/" target="_blank" rel="noopener">BuiltByBit</a> · <a href="https://polymart.org/product/9099/parkourpro-multi-version" target="_blank" rel="noopener">Polymart / Voxelshop</a></p></div>
       </div>
       <div class="callout"><b>Leave a review.</b> Enjoying the plugin? A review on the platform you downloaded it from helps others find it and keeps development going: <a href="https://www.spigotmc.org/resources/%E2%AD%90-parkourpro-lite-1-8-1-21-fully-customizable-free-%E2%AD%90.130978/reviews" target="_blank" rel="noopener">SpigotMC</a> · <a href="https://modrinth.com/plugin/parkourpro-lite" target="_blank" rel="noopener">Modrinth</a> · <a href="https://www.curseforge.com/minecraft/bukkit-plugins/parkourpro-lite-1-8-26-3-create-awesome-parkours" target="_blank" rel="noopener">CurseForge</a> · <a href="https://builtbybit.com/resources/parkourpro-discord-bot-multi-version.86917/reviews" target="_blank" rel="noopener">BuiltByBit</a> · <a href="https://polymart.org/product/9099/parkourpro-multi-version" target="_blank" rel="noopener">Polymart</a>. Thank you!</div>
     </section>
 
+    <!-- ============ PUMPKIN ============ -->
+    <section class="doc" id="pumpkin">
+      <h2><span class="num">18</span>Pumpkin edition</h2>
+      <p class="lead">ParkourPro Lite is also available for <a href="https://pumpkinmc.org/" target="_blank" rel="noopener">Pumpkin</a>, the Minecraft server written in Rust. It is a separate, native build: the Spigot/Paper jar does not run on Pumpkin.</p>
+      <div class="callout"><b>Different from the rest of this wiki.</b> The Pumpkin edition has its own commands, permissions and settings. Everything that applies to it is on this page; the other pages describe the Spigot/Paper editions.</div>
+
+      <h3>Installation</h3>
+      <ol class="steps">
+        <li><b>Download the <code>.wasm</code> file</b><p>Get ParkourPro Lite from the <a href="https://market.pumpkinmc.org/" target="_blank" rel="noopener">Pumpkin Market</a>. Pick the file that matches your Pumpkin version.</p></li>
+        <li><b>Put it in <code>plugins/</code></b><p>Place the file in the <code>plugins/</code> folder of your Pumpkin server and start the server.</p></li>
+        <li><b>Allow file access</b><p>On first start Pumpkin asks to allow <code>fs.write.data</code>. The plugin needs it to save parkours, records and settings in its own data folder. Answer <code>y</code>.</p></li>
+        <li><b>Pick a language</b><p>Set <code>language</code> in <code>config.yml</code> (for example <code>nl_NL</code>) and run <code>/parkour reload</code>.</p></li>
+      </ol>
+      <div class="tbl"><table>
+        <thead><tr><th>Component</th><th>Supported</th></tr></thead>
+        <tbody>
+          <tr><td>Server software</td><td>Pumpkin 0.2.0</td></tr>
+          <tr><td>Minecraft</td><td>26.3</td></tr>
+          <tr><td>Plugin version</td><td>1.1.0</td></tr>
+        </tbody>
+      </table></div>
+      <div class="callout"><b>One build per Pumpkin version.</b> A plugin only loads on the Pumpkin version it was built for. After updating Pumpkin, download the matching plugin file again. The error <i>"Plugin is built against a different API version"</i> means the file and the server do not match.</div>
+
+      <h3>Your first parkour</h3>
+      <ol class="steps">
+        <li><b>Start</b><p>Place a <strong>gold pressure plate</strong> (light weighted), look at it or stand on it and run <code>/parkour setstart &lt;name&gt;</code>.</p></li>
+        <li><b>Finish</b><p>Place a second gold pressure plate and run <code>/parkour setend &lt;name&gt;</code>.</p></li>
+        <li><b>Checkpoints</b><p>Place <strong>iron pressure plates</strong> (heavy weighted) and run <code>/parkour addcheckpoint &lt;name&gt;</code> for each one, in course order.</p></li>
+        <li><b>Leaderboard</b><p>Stand where you want the leaderboard and run <code>/parkour addleaderboard &lt;name&gt;</code>.</p></li>
+      </ol>
+      <p>Step on the start plate to begin. Your inventory is emptied during the run and given back when you finish, cancel or leave.</p>
+
+      <h3>Commands</h3>
+      <p>Root command <code>/parkour</code>, aliases <code>/pk</code> and <code>/par</code>.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Command</th><th>Permission</th><th>What it does</th></tr></thead>
+        <tbody>
+          <tr><td><code>/parkour checkpoint</code></td><td>use</td><td>Teleports you to your last checkpoint.</td></tr>
+          <tr><td><code>/parkour reset</code></td><td>use</td><td>Back to the reset location, timer restarts.</td></tr>
+          <tr><td><code>/parkour cancel</code> · <code>leave</code></td><td>use</td><td>Ends your run.</td></tr>
+          <tr><td><code>/parkour list</code></td><td>use</td><td>Lists all parkours.</td></tr>
+          <tr><td><code>/parkour top &lt;parkour&gt; [page]</code></td><td>use</td><td>Best times of a parkour.</td></tr>
+          <tr><td><code>/parkour pb &lt;parkour&gt; [player]</code></td><td>use</td><td>Personal best, statistics and checkpoint splits.</td></tr>
+          <tr><td><code>/parkour version</code></td><td>use</td><td>Shows the plugin version.</td></tr>
+          <tr><td><code>/parkour setstart &lt;name&gt;</code></td><td>admin</td><td>Sets the start plate (gold). Creates the parkour.</td></tr>
+          <tr><td><code>/parkour setend &lt;name&gt;</code></td><td>admin</td><td>Sets the finish plate (gold).</td></tr>
+          <tr><td><code>/parkour addcheckpoint &lt;name&gt;</code></td><td>admin</td><td>Adds the iron plate as the next checkpoint.</td></tr>
+          <tr><td><code>/parkour deletecheckpoint &lt;name&gt; &lt;number&gt;</code></td><td>admin</td><td>Removes a checkpoint.</td></tr>
+          <tr><td><code>/parkour setreset &lt;name&gt;</code></td><td>admin</td><td>Sets the reset location to where you stand.</td></tr>
+          <tr><td><code>/parkour setleaveposition &lt;name&gt;</code></td><td>admin</td><td>Where players go when they leave or cancel.</td></tr>
+          <tr><td><code>/parkour delete &lt;name&gt;</code></td><td>admin</td><td>Deletes the parkour.</td></tr>
+          <tr><td><code>/parkour addleaderboard &lt;name&gt;</code></td><td>admin</td><td>Places the leaderboard hologram where you stand.</td></tr>
+          <tr><td><code>/parkour setleaderboardsize &lt;name&gt; &lt;size&gt;</code></td><td>admin</td><td>Number of places on the leaderboard.</td></tr>
+          <tr><td><code>/parkour sethologram &lt;name&gt; &lt;start|end|checkpoint&gt; &lt;text&gt;</code></td><td>admin</td><td>Custom hologram text, <code>|</code> starts a new line. <code>default</code> restores the text from config.yml.</td></tr>
+          <tr><td><code>/parkour setfallback &lt;name&gt; &lt;y|off&gt;</code></td><td>admin</td><td>Players below this height are sent back.</td></tr>
+          <tr><td><code>/parkour setcooldown &lt;name&gt; &lt;seconds&gt;</code></td><td>admin</td><td>Waiting time after finishing, 0 = off.</td></tr>
+          <tr><td><code>/parkour setmaxattempts &lt;name&gt; &lt;perDay&gt;</code></td><td>admin</td><td>Attempts per player per day, 0 = unlimited.</td></tr>
+          <tr><td><code>/parkour setleaveradius &lt;name&gt; &lt;blocks&gt;</code></td><td>admin</td><td>Cancels the run when the player moves this far from the course, 0 = off.</td></tr>
+          <tr><td><code>/parkour deletetime &lt;parkour&gt; &lt;player&gt;</code></td><td>admin</td><td>Deletes a record.</td></tr>
+          <tr><td><code>/parkour settime &lt;parkour&gt; &lt;player&gt; &lt;mm:ss.ms&gt;</code></td><td>admin</td><td>Sets a record, for example <code>01:23.456</code>.</td></tr>
+          <tr><td><code>/parkour reload</code></td><td>admin</td><td>Reloads config.yml, the language and all holograms.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Permissions</h3>
+      <p>Pumpkin requires permission nodes to start with the plugin name, so they differ from the Spigot/Paper editions.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Node</th><th>Default</th><th>Grants</th></tr></thead>
+        <tbody>
+          <tr><td><code>parkourpro-lite:use</code></td><td>everyone</td><td>Running parkours and the player commands.</td></tr>
+          <tr><td><code>parkourpro-lite:admin</code></td><td>op (level 2)</td><td>Creating and managing parkours, records and reload.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Configuration and languages</h3>
+      <p><code>config.yml</code> uses the same layout and names as the Spigot/Paper edition, so the <a href="#config">Configuration</a> page applies to the sections below. All 23 languages are included in the <code>languages/</code> folder.</p>
+      <div class="tbl"><table>
+        <thead><tr><th>Section</th><th>Notes for Pumpkin</th></tr></thead>
+        <tbody>
+          <tr><td><code>language</code></td><td>Same as Spigot/Paper.</td></tr>
+          <tr><td><code>sounds</code></td><td>Use Minecraft sound names such as <code>block.note_block.pling</code>. Empty = no sound.</td></tr>
+          <tr><td><code>checkpoints.sequential</code></td><td>Same as Spigot/Paper.</td></tr>
+          <tr><td><code>timer-display</code></td><td><code>type</code> is <code>actionbar</code> or <code>disabled</code>.</td></tr>
+          <tr><td><code>bed-confirmation</code></td><td>Same as Spigot/Paper.</td></tr>
+          <tr><td><code>fallback</code></td><td><code>default-y</code> is applied to newly created parkours when <code>y-enabled</code> is true.</td></tr>
+          <tr><td><code>holograms</code></td><td>Text, leaderboard format, colours and offsets. A hologram grows upwards from its base, so the offsets are the height of the bottom line.</td></tr>
+          <tr><td><code>items</code></td><td>Material, name, slot and click type of the three hotbar items. <code>items.enabled: false</code> keeps the inventory untouched.</td></tr>
+          <tr><td><code>leave.teleport-to</code></td><td><code>start</code>, <code>reset</code> or <code>none</code>.</td></tr>
+          <tr><td><code>broadcast.record</code></td><td>Same as Spigot/Paper.</td></tr>
+          <tr><td><code>features.restart-on-same-start</code></td><td>Same as Spigot/Paper.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Files</h3>
+      <div class="tbl"><table>
+        <thead><tr><th>File</th><th>Contents</th></tr></thead>
+        <tbody>
+          <tr><td><code>config.yml</code></td><td>Settings.</td></tr>
+          <tr><td><code>languages/*.yml</code></td><td>Messages per language. Add your own file and set its name as <code>language</code>.</td></tr>
+          <tr><td><code>parkours.json</code></td><td>Parkours, checkpoints and rules.</td></tr>
+          <tr><td><code>records.json</code></td><td>Best times and checkpoint splits.</td></tr>
+          <tr><td><code>stats.json</code></td><td>Attempts, completions and play time per player.</td></tr>
+        </tbody>
+      </table></div>
+
+      <h3>Not available on Pumpkin</h3>
+      <ul>
+        <li>All <a href="#pro-features">Pro features</a>: there is no Pro edition for Pumpkin yet.</li>
+        <li>End and reward commands, MySQL, the Discord webhook, PlaceholderAPI placeholders and the update checker.</li>
+        <li>Anti-cheat checks, parkour locks, death handling, custom sounds and titles per parkour, import and export, the creation wizard.</li>
+        <li>Title and boss bar timers, and rank prefixes on the leaderboard.</li>
+      </ul>
+
+      <h3>Known issues</h3>
+      <div class="callout"><b>Ghost items in the crafting grid.</b> During a run two of the parkour items can also appear in the crafting slots of the inventory screen. They are only visible on the client and disappear when clicked. This is caused by Pumpkin 0.2.0 and cannot be fixed by the plugin.</div>
+      <div class="callout"><b>Server crash during a run.</b> The inventory of a running player is kept in memory. It is given back on finish, cancel, leave, disconnect and a normal server stop, but not after a crash.</div>
+    </section>
+
     <!-- ============ SUPPORT ============ -->
     <section class="doc" id="support">
-      <h2><span class="num">18</span>Support &amp; Discord</h2>
+      <h2><span class="num">19</span>Support &amp; Discord</h2>
       <p class="lead">Need a language that is not bundled, found a bug, or want help setting something up? Join the Discord server.</p>
       <div class="callout"><b>Discord:</b> <a href="https://discord.gg/2UTkYj26B4" target="_blank" rel="noopener">https://discord.gg/2UTkYj26B4</a></div>
       <ul>
