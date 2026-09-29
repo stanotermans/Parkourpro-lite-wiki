@@ -96,7 +96,7 @@ Pumpkin requires permission nodes to start with the plugin name, so they differ 
 | `records.json` | Best times and checkpoint splits. |
 | `stats.json` | Attempts, completions and play time per player. |
 
-## Not available on Pumpkin
+## Not available on Pumpkin yet!
 
 - All [Pro features](Pro-Features): there is no Pro edition for Pumpkin yet.
 - End and reward commands, MySQL, the Discord webhook, PlaceholderAPI placeholders and the update checker.
